@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+ sequences:
+  image: sequences
+  build:
+   context: .
+   dockerfile: Dockerfile
+  ports:
+   - "8888:8888"
+  command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
+  volumes:
+   - $PWD/jupiter_shared:/home/jovyan
