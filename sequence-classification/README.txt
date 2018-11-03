@@ -1,4 +1,4 @@
-reqirements - zależności do pythona
+requirements - zależności do pythona
 
 docker compose up - uruchamianie aplikacji
 
