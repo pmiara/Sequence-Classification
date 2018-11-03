@@ -1,12 +1,10 @@
 # generic class must be extended
 class SequenceClassifierComparator:
-    # if data is in proper format
     def __init__(self, classifiers=[]):
         self.classifiers = classifiers
         self.predictions = []
         self.scores = []
 
-    # if to classifier needs data in special format
     def add_classifier(self, classifier, sequence_transformer=None):
         self.classifiers.append((classifier, sequence_transformer))
 
