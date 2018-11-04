@@ -43,27 +43,11 @@ class CustomClassifier2(SequenceClassifier):
         return result
 
 
-class CustomComparator(SequenceClassifierComparator):
-    def __init__(self):
-        SequenceClassifierComparator.__init__(self)
-
-    def score_classifiers(self):
-        example = [11, 2, 3, 4, 5]
-        for name, prediction in self.predictions:
-            score = 0
-            for i in range(len(prediction)):
-                if prediction[i] == example[i]:
-                    score += 1
-            self.scores.append((name, score / len(example)))
-        return self.scores
-
-
 # custom_transformer = CustomTransformer()
 # custom_classifier = CustomClassifier("custom1")
 # custom_classifier2 = CustomClassifier2("custom2")
-# custom_comparator = CustomComparator()
-# custom_comparator.add_classifier(custom_classifier, custom_transformer)
-# custom_comparator.add_classifier(custom_classifier2)
-# custom_comparator.fit_classifiers([1, 2, 3, 4, 5])
-# custom_comparator.predict_classifiers([1, 2, 3, 4, 5])
-# custom_comparator.score_classifiers()
+# comparator = SequenceClassifierComparator()
+# comparator.add_classifier(custom_classifier, custom_transformer)
+# comparator.add_classifier(custom_classifier2)
+# comparator.predict_classifiers([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])
+# comparator.score_classifiers()

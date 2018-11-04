@@ -3,8 +3,8 @@ class SequenceClassifier:
     def __init__(self, name):
         self.name = name
 
-    def fit(self):
+    def fit(self, X_train, y_train):
         raise NotImplementedError
 
-    def predict(self, predicting_set):
+    def predict(self, X):
         raise NotImplementedError
