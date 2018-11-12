@@ -16,7 +16,7 @@ class CustomClassifier(SequenceClassifier):
     def __init__(self, name):
         SequenceClassifier.__init__(self, name)
 
-    def fit(self, fitting_set):
+    def fit(self, fitting_set, fitting2):
         pass
 
     def predict(self, predicting_set):
@@ -33,7 +33,7 @@ class CustomClassifier2(SequenceClassifier):
     def __init__(self, name):
         SequenceClassifier.__init__(self, name)
 
-    def fit(self, fitting_set):
+    def fit(self, fitting_set, fitting2):
         pass
 
     def predict(self, predicting_set):

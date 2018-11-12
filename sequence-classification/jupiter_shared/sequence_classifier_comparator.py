@@ -1,4 +1,7 @@
 from sklearn.metrics import accuracy_score
+from mlxtend.evaluate import confusion_matrix
+import matplotlib.pyplot as plt
+from mlxtend.plotting import plot_confusion_matrix
 
 
 class SequenceClassifierComparator:
@@ -29,12 +32,17 @@ class SequenceClassifierComparator:
             self.predictions.append((classifier.name, y_pred))
         return self.predictions
 
-    def score_classifiers(self, X_test, y_test):
+    def score_classifiers(self, X_test, y_test, results_writer):
         for name, y_pred in self.predict_classifiers(X_test):
             y_pred = [0 if i < 0.5 else 1 for i in y_pred]
             accuracy = accuracy_score(y_test, y_pred)
+            matrix = confusion_matrix(y_test, y_pred)
+            results_writer.write_confusion_matrix(name, matrix)
             self.scores.append((name, accuracy))
         return self.scores
 
-    def plot_comparison(self):
-        raise NotImplementedError
+    def plot_comparison(self, results_reader):
+        results = results_reader.read_confusion_matrices(self.classifiers)
+        for r in results:
+            fig, ax = plot_confusion_matrix(conf_mat=r[1])
+            plt.show()

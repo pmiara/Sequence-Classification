@@ -11,3 +11,4 @@ services:
   command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
   volumes:
    - $PWD/jupiter_shared:/home/jovyan
+
