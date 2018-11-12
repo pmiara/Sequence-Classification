@@ -38,11 +38,15 @@ class SequenceClassifierComparator:
             accuracy = accuracy_score(y_test, y_pred)
             matrix = confusion_matrix(y_test, y_pred)
             results_writer.write_confusion_matrix(name, matrix)
+            # TODO parametry odpalania
+            # params = {"warstwy": 2, "koza": 3, "cztery": 4}
+            # results_writer.write_params(name, params)
             self.scores.append((name, accuracy))
         return self.scores
 
     def plot_comparison(self, results_reader):
         results = results_reader.read_confusion_matrices(self.classifiers)
+        # parameters = results_reader.read_params(self.classifiers)
         for r in results:
             fig, ax = plot_confusion_matrix(conf_mat=r[1])
             plt.show()
