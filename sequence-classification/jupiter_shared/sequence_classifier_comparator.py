@@ -1,6 +1,5 @@
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import GridSearchCV, train_test_split
 
 
 class SequenceClassifierComparator:
@@ -37,9 +36,10 @@ class SequenceClassifierComparator:
                 y_pred_test = classifier.predict(X_test)
                 conf_matrix_test = confusion_matrix(y_test, y_pred_test)
 
-                self.writer.write_results(classifier, best_params, conf_matrix_train, conf_matrix_test)
+                self.writer.write_results(classifier.name, best_params, conf_matrix_train, conf_matrix_test)
 
-    def transform_data(cls, X_train, X_test, transformer):
+    @staticmethod
+    def transform_data(X_train, X_test, transformer):
         if transformer is not None:
             X_train_transform = transformer.fit_transform(X_train)
             X_pred_transform = transformer.transform(X_test)
