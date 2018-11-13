@@ -49,5 +49,4 @@ class CustomClassifier2(SequenceClassifier):
 # comparator = SequenceClassifierComparator()
 # comparator.add_classifier(custom_classifier, custom_transformer)
 # comparator.add_classifier(custom_classifier2)
-# comparator.predict_classifiers([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])
-# comparator.score_classifiers()
+# comparator.fit_predict([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])
