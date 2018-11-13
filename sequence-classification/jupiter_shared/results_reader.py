@@ -1,29 +1,24 @@
-import numpy
+import json
 import os.path
 
 
 class ResultsReader:
-    def __init__(self, file_prefix=""):
+    def __init__(self, base_dir="results", file_prefix=""):
         self.file_prefix = file_prefix
+        self.base_dir = base_dir
+        if not os.path.isdir(self.base_dir):
+            raise Exception("directory " + self.base_dir + " not found")
 
-    def read_confusion_matrices(self, classifiers):
+    def read_results(self, classifiers):
         matrices = []
         for c in classifiers:
             series_number = 0
             classifier_name = c[0].name
-            file_name = "results/confusion_matrix/" + self.file_prefix + classifier_name + str(series_number) + ".csv"
+            file_name = os.path.join(self.base_dir, self.file_prefix + classifier_name + str(series_number) + ".csv")
             while os.path.isfile(file_name):
-                matrices.append((classifier_name, numpy.genfromtxt(file_name, delimiter=',').astype(int)))
+                with open(file_name) as file:
+                    data = json.load(file)
+                matrices.append((classifier_name, data))
                 series_number += 1
-                file_name = "results/confusion_matrix/" + self.file_prefix + c[0].name + str(series_number) + ".csv"
+                file_name = os.path.join(self.base_dir, self.file_prefix + classifier_name + str(series_number) + ".csv")
         return matrices
-
-    def read_params(self, classifiers):
-        parameters = []
-        for c in classifiers:
-            classifier_name = c[0].name
-            f = open("results/parameters/" + self.file_prefix + classifier_name + ".csv", "r")
-            data = f.read()
-            f.close()
-            parameters.append((classifier_name, eval(data)))
-        return parameters
