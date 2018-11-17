@@ -16,12 +16,12 @@ class CustomClassifier(SequenceClassifier):
     def __init__(self, name):
         SequenceClassifier.__init__(self, name)
 
-    def fit(self, x_train, y_train):
+    def fit(self, X, y):
         pass
 
-    def predict(self, predicting_set):
+    def predict(self, X):
         result = []
-        for p in predicting_set:
+        for p in X:
             if p == 1:
                 result.append(11)
             else:
@@ -33,12 +33,12 @@ class CustomClassifier2(SequenceClassifier):
     def __init__(self, name):
         SequenceClassifier.__init__(self, name)
 
-    def fit(self, x_train, y_train):
+    def fit(self, X, y):
         pass
 
-    def predict(self, x_train):
+    def predict(self, X):
         result = []
-        for p in x_train:
+        for p in X:
             result.append(p % 3)
         return result
 

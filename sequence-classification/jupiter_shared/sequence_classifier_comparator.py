@@ -26,12 +26,11 @@ class SequenceClassifierComparator:
         for classifier, params, transformer in self.classifier_triplets:
             X_train_transform, X_pred_transform = self.transform_data(X_train, X_test, transformer)
             for _ in range(rounds):
-                grid = GridSearchCV(classifier, params, cv=cv)
+                grid = GridSearchCV(classifier, params, cv=cv, scoring='accuracy')
                 grid.fit(X_train_transform, y_train)
 
                 best_params = grid.best_params_
-                for param in best_params:
-                    setattr(classifier, param, best_params[param])
+                classifier.set_params(**best_params)
                 classifier.fit(X_train_transform, y_train)
 
                 y_pred_train = classifier.predict(X_train)
