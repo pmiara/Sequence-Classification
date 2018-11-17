@@ -49,9 +49,9 @@ class SequenceClassifierComparator:
             X_pred_transform = X_test
         return X_train_transform, X_pred_transform
 
-    def plot_comparison(self, results_reader):
+    def plot_comparison(self):
         classifier_names = [c[0].name for c in self.classifier_triplets]
-        results = results_reader.read_results(classifier_names)
+        results = self.reader.read_results(classifier_names)
         for name, values in results:
             print("--------------")
             print(name)
