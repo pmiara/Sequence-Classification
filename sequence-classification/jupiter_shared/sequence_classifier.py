@@ -1,5 +1,8 @@
+from sklearn.base import BaseEstimator
+
+
 # generic class must be extended
-class SequenceClassifier:
+class SequenceClassifier(BaseEstimator):
     def __init__(self, name):
         self.name = name
 
