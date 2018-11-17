@@ -1,5 +1,7 @@
 import json
 import os.path
+from glob import glob
+import numpy as np
 
 
 class ResultsReader:
@@ -9,16 +11,18 @@ class ResultsReader:
         if not os.path.isdir(self.base_dir):
             raise Exception("directory " + self.base_dir + " not found")
 
-    def read_results(self, classifiers):
-        matrices = []
-        for c in classifiers:
-            series_number = 0
-            classifier_name = c[0].name
-            file_name = os.path.join(self.base_dir, self.file_prefix + classifier_name + str(series_number) + ".csv")
-            while os.path.isfile(file_name):
+    def convert_data(self, data):
+        result = {"conf_matrix_train": np.array(data["conf_matrix_train"]),
+                  "conf_matrix_test": np.array(data["conf_matrix_test"]),
+                  "params": data["params"]}
+        return result
+
+    def read_results(self, classifier_names):
+        results = []
+        for name in classifier_names:
+            pathname = os.path.join(self.base_dir, self.file_prefix + name + "*.csv")
+            for file_name in glob(pathname):
                 with open(file_name) as file:
                     data = json.load(file)
-                matrices.append((classifier_name, data))
-                series_number += 1
-                file_name = os.path.join(self.base_dir, self.file_prefix + classifier_name + str(series_number) + ".csv")
-        return matrices
+                results.append((name, self.convert_data(data)))
+        return results

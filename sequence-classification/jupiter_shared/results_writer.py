@@ -16,7 +16,7 @@ class ResultsWriter:
         data = {"conf_matrix_train": conf_matrix_train.tolist(),
                 "conf_matrix_test": conf_matrix_test.tolist(),
                 "params": params}
-        with open(os.path.join(self.base_dir, self.file_prefix + name + str(self.series_numbers[name]) + ".csv"),
-                  'w') as outfile:
+        filename = self.file_prefix + name + str(self.series_numbers[name]) + ".csv"
+        with open(os.path.join(self.base_dir, filename), 'w') as outfile:
             json.dump(data, outfile)
         self.series_numbers[name] = self.series_numbers[name] + 1
