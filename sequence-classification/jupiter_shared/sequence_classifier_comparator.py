@@ -1,5 +1,3 @@
-from sklearn.metrics import accuracy_score
-from mlxtend.evaluate import confusion_matrix
 import matplotlib.pyplot as plt
 from mlxtend.plotting import plot_confusion_matrix
 from sklearn.metrics import confusion_matrix
