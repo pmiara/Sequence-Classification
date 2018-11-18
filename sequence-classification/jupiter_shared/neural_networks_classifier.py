@@ -9,21 +9,33 @@ from sequence_transformer import SequenceTransformer
 
 
 class NeuralNetworksClassifier(SequenceClassifier):
-    def __init__(self, name='Neural Networks', top_words=5000, max_review_length=500):
+    def __init__(self, name='Neural Networks', top_words=5000, max_review_length=500, embedding_vector_length=32,
+                 memory_units=100, output_size=1, activation='sigmoid', loss_function='binary_crossentropy',
+                 optimizer='adam', metrics=('accuracy',), epochs=3, batch_size=64):
         super(NeuralNetworksClassifier, self).__init__(name)
         self.max_review_length = max_review_length
-        embedding_vecor_length = 32
-        self.model = Sequential()
-        self.model.add(Embedding(top_words, embedding_vecor_length, input_length=self.max_review_length))
-        self.model.add(LSTM(100))
-        self.model.add(Dense(1, activation='sigmoid'))
-        self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        self.embedding_vector_length = embedding_vector_length
+        self.top_words = top_words
+        self.memory_units = memory_units
+        self.output_size = output_size
+        self.activation = activation
+        self.loss_function = loss_function
+        self.optimizer = optimizer
+        self.metrics = metrics
+        self.epochs = epochs
+        self.batch_size = batch_size
 
-    def fit(self, X_train, y_train):
-        self.model.fit(X_train, y_train, epochs=3, batch_size=64)
+    def fit(self, X, y):
+        self.model_ = Sequential()
+        self.model_.add(Embedding(self.top_words, self.embedding_vector_length, input_length=self.max_review_length))
+        self.model_.add(LSTM(self.memory_units))
+        self.model_.add(Dense(self.output_size, activation=self.activation))
+        self.model_.compile(loss=self.loss_function, optimizer=self.optimizer, metrics=self.metrics)
+        self.model_.fit(X, y, epochs=self.epochs, batch_size=self.batch_size)
+        return self
 
     def predict(self, X):
-        return self.model.predict(X)
+        return self.model_.predict(X)
 
     def get_transformer(self):
         return NeuralNetworksTransformer(self.max_review_length)
@@ -36,3 +48,6 @@ class NeuralNetworksTransformer(SequenceTransformer):
     def transform(self, X):
         # truncate and pad input sequences
         return sequence.pad_sequences(X, maxlen=self.max_review_length)
+
+    def fit_transform(self, X):
+        return self.transform(X)
