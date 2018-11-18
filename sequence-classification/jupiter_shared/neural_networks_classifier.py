@@ -11,7 +11,7 @@ from sequence_transformer import SequenceTransformer
 class NeuralNetworksClassifier(SequenceClassifier):
     def __init__(self, name='Neural Networks', top_words=5000, max_review_length=500, embedding_vector_length=32,
                  memory_units=100, output_size=1, activation='sigmoid', loss_function='binary_crossentropy',
-                 optimizer='adam', metrics=('accuracy',), epochs=3, batch_size=64):
+                 optimizer='adam', metrics=None, epochs=3, batch_size=64, verbose=1):
         super(NeuralNetworksClassifier, self).__init__(name)
         self.max_review_length = max_review_length
         self.embedding_vector_length = embedding_vector_length
@@ -21,9 +21,13 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.activation = activation
         self.loss_function = loss_function
         self.optimizer = optimizer
-        self.metrics = metrics
+        if metrics is None:
+            self.metrics = ['accuracy']
+        else:
+            self.metrics = metrics
         self.epochs = epochs
         self.batch_size = batch_size
+        self.verbose = verbose
 
     def fit(self, X, y):
         self.model_ = Sequential()
@@ -31,11 +35,11 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.model_.add(LSTM(self.memory_units))
         self.model_.add(Dense(self.output_size, activation=self.activation))
         self.model_.compile(loss=self.loss_function, optimizer=self.optimizer, metrics=self.metrics)
-        self.model_.fit(X, y, epochs=self.epochs, batch_size=self.batch_size)
+        self.model_.fit(X, y, epochs=self.epochs, batch_size=self.batch_size, verbose=self.verbose)
         return self
 
     def predict(self, X):
-        return self.model_.predict(X)
+        return self.model_.predict(X).round()
 
     def get_transformer(self):
         return NeuralNetworksTransformer(self.max_review_length)
