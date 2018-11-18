@@ -4,9 +4,9 @@
 ## Installing
 ### Docker
 ```
-requirements - zależności do pythona
+requirements.txt - zależności do Pythona
 
-docker compose up - uruchamianie aplikacji
+docker-compose up - uruchamianie aplikacji, w razie błędów dodaj sudo
 
 docker image rm -f sequences - po zmianach w requirements.txt usuwanie istniejącego obrazu dockerowego,
 potem docker compose up żeby zbudować nowy, ustawić properties i uruchomić
