@@ -23,7 +23,8 @@ class SequenceClassifierComparator:
         X_train, X_test, y_train, y_test = train_test_split(X, y, **split_params)
         for classifier, params, transformer in self.classifier_triplets:
             X_train_transform, X_pred_transform = self.transform_data(X_train, X_test, transformer)
-            for _ in range(rounds):
+            for i in range(rounds):
+                print('{}, round {}, with {}-fold cross validation'.format(classifier.name, i + 1, cv))
                 grid = GridSearchCV(classifier, params, cv=cv, scoring='accuracy')
                 grid.fit(X_train_transform, y_train)
 
