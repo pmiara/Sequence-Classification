@@ -1,20 +1,23 @@
 from sequence_classifier import SequenceClassifier
 from keras.preprocessing import sequence
-
 from sklearn.neighbors import KNeighborsClassifier
+import editdistance
+
 from sequence_transformer import SequenceTransformer
 
 
 class KNNClassifier(SequenceClassifier):
-    def __init__(self, name='KNN', distance_metric='hamming', max_sequence_len=500, **params):
+    def __init__(self, name='KNN', metric='editdistance', max_sequence_len=500, n_neighbors=3):
         super(KNNClassifier, self).__init__(name)
-        self.distance_metric = distance_metric
+        if metric == 'editdistance':
+            metric = editdistance.eval
+        self.metric = metric
         self.max_sequence_len = max_sequence_len
-        self.params = params
+        self.n_neighbors = n_neighbors
 
     def fit(self, X, y):
         self.model_ = KNeighborsClassifier(
-            metric=self.distance_metric, **self.params)
+            metric=self.metric, n_neighbors=self.n_neighbors)
         self.model_.fit(X, y)
         return self
 
