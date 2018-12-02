@@ -53,7 +53,10 @@ class SequenceClassifierComparator:
     def show_results(self):
         classifier_names = [c[0].name for c in self.classifier_triplets]
         results = self.reader.read_results(classifier_names)
+        accuracies, names = [], []
         for name, values in results.items():
+            accuracies.append([self.calc_accuracy_from_cm(v['conf_matrix_test']) for v in values])
+            names.append(name)
             conf_mat_train = np.mean([v['conf_matrix_train'] for v in values], axis=0).astype('int')
             conf_mat_test = np.mean([v['conf_matrix_test'] for v in values], axis=0).astype('int')
             no_of_classes = len(conf_mat_train)
@@ -65,6 +68,17 @@ class SequenceClassifierComparator:
             self.plot_confusion_matrix(conf_mat_test, classes=[str(i) for i in range(no_of_classes)],
                                        title='Test confusion matrix for {}'.format(name))
             plt.show()
+        self.show_boxplots(accuracies, names)
+
+    @staticmethod
+    def calc_accuracy_from_cm(cm):
+        return cm.diagonal().sum() / cm.sum()
+
+    def show_boxplots(self, accuracies, names):
+        _, ax = plt.subplots(figsize=(12, 8))
+        ax.set_title('Accuracy on test set', fontsize='x-large')
+        ax.boxplot(accuracies, labels=names)
+        plt.show()
 
     @staticmethod
     def plot_confusion_matrix(cm, classes, normalize=False,title='Confusion matrix',
