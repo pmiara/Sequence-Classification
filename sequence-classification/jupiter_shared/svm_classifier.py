@@ -2,8 +2,8 @@ from sequence_classifier import SequenceClassifier
 from sequence_transformer import SequenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 
-from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
+
 
 class SVMClassifier(SequenceClassifier):
     def __init__(self, name='SVM'):

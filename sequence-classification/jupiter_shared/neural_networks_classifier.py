@@ -5,7 +5,6 @@ from keras.layers.embeddings import Embedding
 from keras.preprocessing import sequence
 
 from sequence_classifier import SequenceClassifier
-from sequence_transformer import SequenceTransformer
 
 
 class NeuralNetworksClassifier(SequenceClassifier):
@@ -30,6 +29,7 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.verbose = verbose
 
     def fit(self, X, y):
+        X = sequence.pad_sequences(X, maxlen=self.max_review_length)
         self.model_ = Sequential()
         self.model_.add(Embedding(self.top_words, self.embedding_vector_length, input_length=self.max_review_length))
         self.model_.add(LSTM(self.memory_units))
@@ -39,19 +39,5 @@ class NeuralNetworksClassifier(SequenceClassifier):
         return self
 
     def predict(self, X):
+        X = sequence.pad_sequences(X, maxlen=self.max_review_length)
         return self.model_.predict(X).round()
-
-    def get_transformer(self):
-        return NeuralNetworksTransformer(self.max_review_length)
-
-
-class NeuralNetworksTransformer(SequenceTransformer):
-    def __init__(self, max_review_length=500):
-        self.max_review_length = max_review_length
-
-    def transform(self, X):
-        # truncate and pad input sequences
-        return sequence.pad_sequences(X, maxlen=self.max_review_length)
-
-    def fit_transform(self, X):
-        return self.transform(X)
