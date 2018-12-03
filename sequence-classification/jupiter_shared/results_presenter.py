@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 
 
 class ResultsPresenter:
+    """
+    Results contain confusion matrices and best parameters for each classifier for each round of training.
+    There are confusion matrices for both train set and test set.
+    """
     def __init__(self, results):
         self.results = results
 
@@ -26,8 +30,7 @@ class ResultsPresenter:
             plt.show()
 
     @staticmethod
-    def plot_confusion_matrix(cm, classes, normalize=False,title='Confusion matrix',
-                              cmap=plt.cm.Blues, font_size='x-large'):
+    def plot_confusion_matrix(cm, classes, title, normalize=False, cmap=plt.cm.Blues, font_size='x-large'):
         """
         This function prints and plots the confusion matrix.
         Normalization can be applied by setting `normalize=True`.
@@ -44,9 +47,9 @@ class ResultsPresenter:
         fmt = '.2f' if normalize else 'd'
         thresh = cm.max() / 2.
         for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-            plt.text(j, i, format(cm[i, j], fmt),
-                     horizontalalignment='center', fontsize=font_size,
-                     color='white' if cm[i, j] > thresh else 'black')
+            color = 'white' if cm[i, j] > thresh else 'black'
+            plt.text(j, i, format(cm[i, j], fmt), horizontalalignment='center',
+                     fontsize=font_size, color=color)
 
         plt.ylabel('True label')
         plt.xlabel('Predicted label')
