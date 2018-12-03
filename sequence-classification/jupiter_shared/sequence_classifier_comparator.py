@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
-from mlxtend.plotting import plot_confusion_matrix
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV, train_test_split
+
+from results_presenter import ResultsPresenter
 
 
 class SequenceClassifierComparator:
@@ -49,12 +49,8 @@ class SequenceClassifierComparator:
             X_pred_transform = X_test
         return X_train_transform, X_pred_transform
 
-    def plot_comparison(self):
+    def get_presenter(self):
         classifier_names = [c[0].name for c in self.classifier_triplets]
         results = self.reader.read_results(classifier_names)
-        for name, values in results:
-            print("--------------")
-            print(name)
-            print(values["params"])
-            fig, ax = plot_confusion_matrix(conf_mat=values["conf_matrix_test"])
-            plt.show()
+        return ResultsPresenter(results)
+

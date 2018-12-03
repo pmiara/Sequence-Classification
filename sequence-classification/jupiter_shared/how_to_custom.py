@@ -55,4 +55,5 @@ if __name__ == '__main__':
     comparator.add_classifier(custom_classifier, sequence_transformer=custom_transformer)
     comparator.add_classifier(custom_classifier2)
     comparator.fit_predict([1, 2, 3, 4, 5], [1, 2, 3, 4, 5])
-    comparator.plot_comparison()
+    presenter = comparator.get_presenter()
+    presenter.show_all()

@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 from os import path
 from glob import glob
 import numpy as np
@@ -18,11 +19,11 @@ class ResultsReader:
         return result
 
     def read_results(self, classifier_names):
-        results = []
+        results = defaultdict(list)
         for name in classifier_names:
             pathname = path.join(self.base_dir, self.file_prefix + name + "*.csv")
             for file_name in glob(pathname):
                 with open(file_name) as file:
                     data = json.load(file)
-                results.append((name, self.convert_data(data)))
+                results[name].append(self.convert_data(data))
         return results
