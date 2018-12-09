@@ -1,3 +1,5 @@
 seqlearn
 mlxtend
 editdistance
+prefixspan
+pandas
