@@ -1,10 +1,9 @@
 from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
-from keras.layers.embeddings import Embedding
+from keras.layers import Dense, LSTM
 from keras.preprocessing import sequence
+from keras.layers.embeddings import Embedding
 
-from sequence_classifier import SequenceClassifier
+from .sequence_classifier import SequenceClassifier
 
 
 class NeuralNetworksClassifier(SequenceClassifier):

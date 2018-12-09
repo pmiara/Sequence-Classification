@@ -1,8 +1,8 @@
-from sequence_classifier import SequenceClassifier
+import editdistance
 from keras.preprocessing import sequence
 from sklearn.neighbors import KNeighborsClassifier
-import editdistance
 
+from .sequence_classifier import SequenceClassifier
 
 
 class KNNClassifier(SequenceClassifier):

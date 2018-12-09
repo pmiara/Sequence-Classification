@@ -1,5 +1,5 @@
 from sequence_transformer import SequenceTransformer
-from sequence_classifier import SequenceClassifier
+from classifiers.sequence_classifier import SequenceClassifier
 from sequence_classifier_comparator import SequenceClassifierComparator
 from results_writer import ResultsWriter
 from results_reader import ResultsReader
