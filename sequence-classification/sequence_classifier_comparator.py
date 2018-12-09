@@ -20,11 +20,12 @@ class SequenceClassifierComparator:
     def fit_predict(self, X, y, split_params=None, rounds=3, cv=3):
         if split_params is None:
             split_params = {}
-        X_train, X_test, y_train, y_test = train_test_split(X, y, **split_params)
-        for classifier, params, transformer in self.classifier_triplets:
-            X_train_transform, X_pred_transform = self.transform_data(X_train, X_test, transformer)
-            for i in range(rounds):
+        for i in range(rounds):
+            for classifier, params, transformer in self.classifier_triplets:
                 print('{}, round {}, with {}-fold cross validation'.format(classifier.name, i + 1, cv))
+                X_train, X_test, y_train, y_test = train_test_split(X, y, **split_params)
+                X_train_transform, X_pred_transform = self.transform_data(X_train, X_test, transformer)
+
                 grid = GridSearchCV(classifier, params, cv=cv, scoring='accuracy')
                 grid.fit(X_train_transform, y_train)
 
