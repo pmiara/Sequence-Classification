@@ -1,21 +1,18 @@
+import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 from keras.preprocessing import sequence
-from keras.layers.embeddings import Embedding
+from keras.utils.np_utils import to_categorical
 
 from .sequence_classifier import SequenceClassifier
 
 
 class NeuralNetworksClassifier(SequenceClassifier):
-    def __init__(self, name='Neural Networks', top_words=5000, max_review_length=500, embedding_vector_length=32,
-                 memory_units=100, output_size=1, activation='sigmoid', loss_function='binary_crossentropy',
-                 optimizer='adam', metrics=None, epochs=3, batch_size=64, verbose=1):
+    def __init__(self, name='Neural Networks', memory_units=100, max_seq_length=500, activation='sigmoid',
+                 loss_function='categorical_crossentropy', optimizer='adam', metrics=None, epochs=3, batch_size=64, verbose=1):
         super(NeuralNetworksClassifier, self).__init__(name)
-        self.max_review_length = max_review_length
-        self.embedding_vector_length = embedding_vector_length
-        self.top_words = top_words
+        self.max_seq_length = max_seq_length
         self.memory_units = memory_units
-        self.output_size = output_size
         self.activation = activation
         self.loss_function = loss_function
         self.optimizer = optimizer
@@ -28,15 +25,21 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.verbose = verbose
 
     def fit(self, X, y):
-        X = sequence.pad_sequences(X, maxlen=self.max_review_length)
+        X = self.transform(X)
+        y = to_categorical(y)
         self.model_ = Sequential()
-        self.model_.add(Embedding(self.top_words, self.embedding_vector_length, input_length=self.max_review_length))
-        self.model_.add(LSTM(self.memory_units))
-        self.model_.add(Dense(self.output_size, activation=self.activation))
+        self.model_.add(LSTM(self.memory_units, input_shape=(self.max_seq_length, 1)))
+        self.model_.add(Dense(len(y[0]), activation=self.activation))
         self.model_.compile(loss=self.loss_function, optimizer=self.optimizer, metrics=self.metrics)
         self.model_.fit(X, y, epochs=self.epochs, batch_size=self.batch_size, verbose=self.verbose)
         return self
 
     def predict(self, X):
-        X = sequence.pad_sequences(X, maxlen=self.max_review_length)
-        return self.model_.predict(X).round()
+        X = self.transform(X)
+        return np.argmax(self.model_.predict(X), axis=1)
+
+    def transform(self, X):
+        X = sequence.pad_sequences(X, maxlen=self.max_seq_length)
+        X = X[:, :, np.newaxis]
+        return X
+
