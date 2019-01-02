@@ -12,6 +12,7 @@ setup(
     author='Berezowski Jakub, Lipowska Magda,Miara Piotr, Szczepaniak Grzegorz',
     author_email='mail',
     license='MIT',
+    zip_safe=False,
     setup_requires=['pytest-runner'],
     install_requires=[],
     tests_require=['pytest']
