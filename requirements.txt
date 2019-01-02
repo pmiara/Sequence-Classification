@@ -1,3 +1,6 @@
 seqlearn
 mlxtend
 editdistance
+pytest
+matplotlib
+PyQt5
