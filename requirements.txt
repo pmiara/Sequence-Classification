@@ -1,6 +1,8 @@
 seqlearn
 mlxtend
 editdistance
+prefixspan
+pandas
 pytest
 matplotlib
 PyQt5
