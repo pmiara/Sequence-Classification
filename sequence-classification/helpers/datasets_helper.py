@@ -12,7 +12,11 @@ def get_train_and_test(data, ratio=0.8):
 
 
 def get_X_y(data):
-    vectorizer = CountVectorizer()
+    vectorizer = CountVectorizer(analyzer="word",
+                                 tokenizer=None,
+                                 preprocessor=None,
+                                 stop_words=None,
+                                 token_pattern=r'\b\w+\b')
     docs = [x[0] for x in data]
     vectorizer.fit(docs)
     integers_from_strings = [[vectorizer.vocabulary_.get(y) for y in re.sub(r'[.!,;?]', ' ', x).split() if
@@ -54,6 +58,20 @@ def get_troll_data(train_test_ratio=0.8):
             troll_data.append((json_line['content'], int(json_line['annotation']['label'][0])))
 
     train, test = get_train_and_test(troll_data, train_test_ratio)
+    X_train, y_train = get_X_y(train)
+    X_test, y_test = get_X_y(test)
+
+    return (X_train, y_train), (X_test, y_test)
+
+
+def get_valley_data(train_test_ratio=0.8):
+    valley_data = []
+    with open('./datasets/sentiment/valley_data.txt', 'r') as f:
+        file_content = f.readlines()
+        for line in file_content:
+            values = line.split("\t")
+            valley_data.append((str(values[0]), int(re.sub("\D", "", values[1]))))
+    train, test = get_train_and_test(valley_data, train_test_ratio)
     X_train, y_train = get_X_y(train)
     X_test, y_test = get_X_y(test)
 
