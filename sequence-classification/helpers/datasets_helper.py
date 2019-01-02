@@ -19,8 +19,8 @@ def get_X_y(data):
                                  token_pattern=r'\b\w+\b')
     docs = [x[0] for x in data]
     vectorizer.fit(docs)
-    integers_from_strings = [[vectorizer.vocabulary_.get(y) for y in re.sub(r'[.!,;?]', ' ', x).split() if
-                              vectorizer.vocabulary_.get(y) is not None] for x in docs]
+    integers_from_strings = [[vectorizer.vocabulary_.get(y.lower()) for y in re.sub(r'[.!,;?]', ' ', x).split() if
+                              vectorizer.vocabulary_.get(y.lower()) is not None] for x in docs]
     return numpy.array(integers_from_strings), numpy.array([x[1] for x in data])
 
 
@@ -76,3 +76,13 @@ def get_valley_data(train_test_ratio=0.8):
     X_test, y_test = get_X_y(test)
 
     return (X_train, y_train), (X_test, y_test)
+
+
+def get_bio_data():
+    bio_data = []
+    with open('./datasets/bioData.data', 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            bio_class, _, sequence = line.replace(" ", "").replace("\n", "").split(',')
+            bio_data.append((' '.join(list(sequence)), bio_class))
+    return get_X_y(bio_data)
