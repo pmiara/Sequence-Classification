@@ -26,7 +26,7 @@ class HMMTransformer(SequenceTransformer):
                                  tokenizer=None,
                                  preprocessor=None,
                                  stop_words=None,
-                                 token_pattern='\\b\\w+\\b')
+                                 token_pattern=r'\b\w+\b')
 
     def fit_transform(self, raw_data):
         strings_from_list = [' '.join([str(x) for x in data]) for data in raw_data]

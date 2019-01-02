@@ -16,7 +16,7 @@ def get_X_y(data):
                                  tokenizer=None,
                                  preprocessor=None,
                                  stop_words=None,
-                                 token_pattern='\\b\\w+\\b')
+                                 token_pattern=r'\b\w+\b')
     docs = [x[0] for x in data]
     vectorizer.fit(docs)
     integers_from_strings = [[vectorizer.vocabulary_.get(y) for y in re.sub(r'[.!,;?]', ' ', x).split() if

@@ -54,4 +54,3 @@ class SequenceClassifierComparator:
         classifier_names = [c[0].name for c in self.classifier_triplets]
         results = self.reader.read_results(classifier_names)
         return ResultsPresenter(results)
-
