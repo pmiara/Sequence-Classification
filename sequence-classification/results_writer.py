@@ -1,22 +1,27 @@
 import json
 import os
+from collections import defaultdict
 
 
 class ResultsWriter:
-    def __init__(self, base_dir="results", file_prefix=""):
+    def __init__(self, base_dir='results', file_prefix=''):
         self.file_prefix = file_prefix
-        self.series_numbers = {}
+        self.saved = defaultdict(set)
         self.base_dir = base_dir
         if not os.path.isdir(self.base_dir):
             os.mkdir(self.base_dir)
 
-    def write_results(self, name, params, conf_matrix_train, conf_matrix_test):
-        if name not in self.series_numbers.keys():
-            self.series_numbers[name] = 0
-        data = {"conf_matrix_train": conf_matrix_train.tolist(),
-                "conf_matrix_test": conf_matrix_test.tolist(),
-                "params": params}
-        filename = self.file_prefix + name + str(self.series_numbers[name]) + ".csv"
-        with open(os.path.join(self.base_dir, filename), 'w') as outfile:
+    def write_results(self, dataset_name, classifier_name, params, conf_matrix_train, conf_matrix_test):
+        data = {'conf_matrix_train': conf_matrix_train.tolist(),
+                'conf_matrix_test': conf_matrix_test.tolist(),
+                'params': params}
+        filename = self.file_prefix + classifier_name + '.txt'
+        filename = os.path.join(self.base_dir, dataset_name, filename)
+        if self.old_results_are_present(dataset_name, classifier_name, filename):
+            os.remove(filename)
+        with open(filename, 'a') as outfile:
             json.dump(data, outfile)
-        self.series_numbers[name] = self.series_numbers[name] + 1
+        self.saved[dataset_name].add(classifier_name)
+
+    def old_results_are_present(self, dataset_name, classifier_name, filename):
+        return classifier_name not in self.saved[dataset_name] and os.path.exists(filename)
