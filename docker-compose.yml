@@ -10,5 +10,5 @@ services:
    - "8888:8888"
   command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
   volumes:
-   - ./sequence-classification:/home/jovyan
+   - .:/home/jovyan
 

@@ -1,7 +1,8 @@
-from sequence_classifier_comparator import SequenceClassifierComparator
+from sequence_classification.sequence_classifier_comparator import SequenceClassifierComparator
 import numpy as np
 
-from .mock import MockClassifier, MockReader, MockWriter, PARAMS, NAME, CONF_TRAIN_MAT, CONF_TEST_MAT
+from .mock import (MockClassifier, MockReader, MockWriter, PARAMS, DATASET,
+    CLASSIFIER, DATASET_NAME, CONF_TRAIN_MAT, CONF_TEST_MAT)
 
 
 def test_should_add_classifier():
@@ -24,12 +25,14 @@ def test_should_save_correctly_predicted_data():
     seq_class_comparator.add_classifier(test_class)
     X = [1,2,3,4,5]
     y = [1,2,3,4,5]
+    seq_class_comparator.add_other_dataset(X, y, DATASET_NAME)
 
     # when
-    seq_class_comparator.fit_predict(X, y)
+    seq_class_comparator.fit_predict_all()
 
     # then
-    assert test_writer.results[NAME] == "TEST"
+    assert test_writer.results[DATASET] == DATASET_NAME
+    assert test_writer.results[CLASSIFIER] == "TEST"
     assert test_writer.results[PARAMS] == {}
     assert np.array_equal(test_writer.results[CONF_TRAIN_MAT], np.identity(len(test_writer.results[CONF_TRAIN_MAT])))
     assert np.array_equal(test_writer.results[CONF_TEST_MAT], np.identity(len(test_writer.results[CONF_TEST_MAT])))
@@ -43,9 +46,10 @@ def test_should_save_wrong_predicted_data():
     seq_class_comparator.add_classifier(test_class)
     X = [1,2,3,4,5]
     y = [2,3,4,5,1]
+    seq_class_comparator.add_other_dataset(X, y, DATASET_NAME)
 
     # when
-    seq_class_comparator.fit_predict(X, y)
+    seq_class_comparator.fit_predict_all()
 
     # then
     assert np.diag(test_writer.results[CONF_TRAIN_MAT]).sum() == 0
@@ -61,10 +65,11 @@ def test_should_change_name_and_params():
     seq_class_comparator.add_classifier(test_class, params=params)
     X = [1,2,3,4,5]
     y = [1,2,3,4,5]
+    seq_class_comparator.add_other_dataset(X, y, DATASET_NAME)
 
     # when
-    seq_class_comparator.fit_predict(X, y)
+    seq_class_comparator.fit_predict_all()
 
     # then
-    assert test_writer.results[NAME] == "NAME"
+    assert test_writer.results[CLASSIFIER] == "NAME"
     assert test_writer.results[PARAMS] == {'x': 'a'}

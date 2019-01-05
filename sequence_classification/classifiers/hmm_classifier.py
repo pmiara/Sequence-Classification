@@ -2,7 +2,7 @@ from seqlearn.hmm import MultinomialHMM
 from sklearn.feature_extraction.text import CountVectorizer
 
 from .sequence_classifier import SequenceClassifier
-from sequence_transformer import SequenceTransformer
+from ..sequence_transformer import SequenceTransformer
 
 
 class HMMClassifier(SequenceClassifier):
