@@ -1,17 +1,21 @@
 import itertools
 import numpy as np
 import matplotlib.pyplot as plt
-
+from scipy.stats import friedmanchisquare, f_oneway, ttest_ind
+from scikit_posthocs import posthoc_nemenyi_friedman
 
 FONT_SIZE = 'x-large'
+
 
 class ResultsPresenter:
     """
     Results contain confusion matrices and best parameters for each classifier for each round of training.
     There are confusion matrices for both train set and test set.
     """
+
     def __init__(self, results):
         self.results = results
+        self.measurements = None
 
     def show_all(self):
         self.show_confusion_matrices()
@@ -80,3 +84,52 @@ class ResultsPresenter:
     @staticmethod
     def calc_accuracy_from_cm(cm):
         return cm.diagonal().sum() / cm.sum()
+
+    def prepare_measurements(self):
+        if self.measurements:
+            return
+        self.measurements = []
+        for d in self.results:
+            self.measurements.append([])
+            for classifier_name, rounds in self.results[d].items():
+                self.measurements[-1].append([])
+                for r in rounds:
+                    acc = self.calc_accuracy_from_cm(r['conf_matrix_test'])
+                    self.measurements[-1][-1].append(acc)
+    
+    def calc_friedman_value(self):
+        self.prepare_measurements()
+        avg = []
+        for dataset in self.measurements:
+            avg.append([])
+            for classifier in dataset:
+                avg[-1].append(np.average(classifier))
+        return friedmanchisquare(*avg)
+
+    def calc_anova_value(self):
+        self.prepare_measurements()
+        anova = []
+        for dataset in self.measurements:
+            anova.append(f_oneway(*dataset))
+        return anova
+
+    def calc_nemenyi(self):
+        self.prepare_measurements()
+        avg = []
+        for dataset in self.measurements:
+            avg.append([])
+            for classifier in dataset:
+                avg[-1].append(np.average(classifier))
+        return posthoc_nemenyi_friedman(avg)
+
+    def calc_t_student(self):
+        self.prepare_measurements()
+        t_student = []
+        for dataset in self.measurements:
+            matrix = []
+            for classifier1 in dataset:
+                matrix.append([])
+                for classifier2 in dataset:
+                    matrix[-1].append(ttest_ind(classifier1, classifier2))
+            t_student.append(matrix)
+        return t_student

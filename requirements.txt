@@ -5,3 +5,4 @@ prefixspan
 pandas
 pytest
 matplotlib
+scikit-posthocs
