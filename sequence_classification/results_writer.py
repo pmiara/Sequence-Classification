@@ -17,10 +17,10 @@ class ResultsWriter:
                 'conf_matrix_test': conf_matrix_test.tolist(),
                 'params': params}
         filename = self.file_prefix + classifier_name + '.txt'
-        filename = os.path.join(self.base_dir, dataset_name, filename)
-        if self.old_results_are_present(dataset_name, classifier_name, filename):
-            os.remove(filename)
-        with open(filename, 'a') as outfile:
+        pathname = os.path.join(self.base_dir, dataset_name, filename)
+        if self.old_results_are_present(dataset_name, classifier_name, pathname):
+            os.remove(pathname)
+        with open(pathname, 'a') as outfile:
             json.dump(data, outfile)
             outfile.write('\n')
         self.saved[dataset_name].add(classifier_name)

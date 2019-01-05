@@ -5,4 +5,3 @@ prefixspan
 pandas
 pytest
 matplotlib
-PyQt5

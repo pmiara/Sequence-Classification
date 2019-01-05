@@ -1,7 +1,6 @@
 import json
 from collections import defaultdict
 from os import path
-from glob import glob
 import numpy as np
 
 
@@ -21,9 +20,8 @@ class ResultsReader:
     def read_results(self, dataset_names, classifier_names):
         results = {}
         for dataset in dataset_names:
-            results[dataset] = {}
+            results[dataset] = defaultdict(list)
             for classifier in classifier_names:
-                results[dataset][classifier] = []
                 filename = path.join(self.base_dir, dataset, self.file_prefix + classifier + ".txt")
                 with open(filename) as f:
                     for line in f.readlines():

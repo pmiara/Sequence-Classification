@@ -38,7 +38,7 @@ class SequenceClassifierComparator:
                 X_train, X_test, y_train, y_test = train_test_split(dataset.X, dataset.y, **split_params)
                 for classifier, params, transformer in self.classifier_triplets:
                     print('{}, round {}, with {}-fold cross validation'.format(classifier.name, i + 1, self.cv))
-                    X_train_transform, X_test_transform = self.transform_data(X_train, X_test, transformer)
+                    X_train_transform, X_test_transform = self.apply_transformer(X_train, X_test, transformer)
                     results = self.fit_predict(X_train_transform, y_train, X_test_transform, y_test, classifier, params)
                     self.writer.write_results(dataset.name, classifier.name, *results)
 
@@ -57,7 +57,7 @@ class SequenceClassifierComparator:
         return best_params, conf_matrix_train, conf_matrix_test
 
     @staticmethod
-    def transform_data(X_train, X_test, transformer):
+    def apply_transformer(X_train, X_test, transformer):
         if transformer is not None:
             X_train_transform = transformer.fit_transform(X_train)
             X_test_transform = transformer.transform(X_test)

@@ -1,7 +1,8 @@
 from sequence_classification.sequence_classifier_comparator import SequenceClassifierComparator
 import numpy as np
 
-from .mock import MockClassifier, MockReader, MockWriter, PARAMS, DATASET, CLASSIFIER, DATASET_NAME, CONF_TRAIN_MAT, CONF_TEST_MAT
+from .mock import (MockClassifier, MockReader, MockWriter, PARAMS, DATASET,
+    CLASSIFIER, DATASET_NAME, CONF_TRAIN_MAT, CONF_TEST_MAT)
 
 
 def test_should_add_classifier():
