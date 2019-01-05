@@ -67,6 +67,7 @@ class SequenceClassifierComparator:
         return X_train_transform, X_test_transform
 
     def get_presenter(self):
+        dataset_names = [d.name for d in self.datasets]
         classifier_names = [c[0].name for c in self.classifier_triplets]
-        results = self.reader.read_results(classifier_names)
+        results = self.reader.read_results(dataset_names, classifier_names)
         return ResultsPresenter(results)

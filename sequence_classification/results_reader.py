@@ -18,12 +18,15 @@ class ResultsReader:
                   "params": data["params"]}
         return result
 
-    def read_results(self, classifier_names):
-        results = defaultdict(list)
-        for name in classifier_names:
-            pathname = path.join(self.base_dir, self.file_prefix + name + "*.csv")
-            for file_name in glob(pathname):
-                with open(file_name) as file:
-                    data = json.load(file)
-                results[name].append(self.convert_data(data))
+    def read_results(self, dataset_names, classifier_names):
+        results = {}
+        for dataset in dataset_names:
+            results[dataset] = {}
+            for classifier in classifier_names:
+                results[dataset][classifier] = []
+                filename = path.join(self.base_dir, dataset, self.file_prefix + classifier + ".txt")
+                with open(filename) as f:
+                    for line in f.readlines():
+                        data = json.loads(line)
+                        results[dataset][classifier].append(self.convert_data(data))
         return results
