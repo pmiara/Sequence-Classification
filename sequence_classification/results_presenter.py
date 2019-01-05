@@ -16,18 +16,20 @@ class ResultsPresenter:
         self.show_box_plots()
 
     def show_confusion_matrices(self):
-        for name, values in self.results.items():
-            conf_mat_train = np.mean([v['conf_matrix_train'] for v in values], axis=0).astype('int')
-            conf_mat_test = np.mean([v['conf_matrix_test'] for v in values], axis=0).astype('int')
-            no_of_classes = len(conf_mat_train)
-            plt.figure(figsize=(15, 15))
-            plt.subplot(1, 2, 1)
-            self.plot_confusion_matrix(conf_mat_train, classes=[str(i) for i in range(no_of_classes)],
-                                       title='Train confusion matrix for {}'.format(name))
-            plt.subplot(1, 2, 2)
-            self.plot_confusion_matrix(conf_mat_test, classes=[str(i) for i in range(no_of_classes)],
-                                       title='Test confusion matrix for {}'.format(name))
-            plt.show()
+        for dataset in self.results:
+            print(dataset)
+            for classifier, values in self.results[dataset].items():
+                conf_mat_train = np.mean([v['conf_matrix_train'] for v in values], axis=0).astype('int')
+                conf_mat_test = np.mean([v['conf_matrix_test'] for v in values], axis=0).astype('int')
+                no_of_classes = len(conf_mat_train)
+                plt.figure(figsize=(15, 15))
+                plt.subplot(1, 2, 1)
+                self.plot_confusion_matrix(conf_mat_train, classes=[str(i) for i in range(no_of_classes)],
+                                           title='Train confusion matrix for {}'.format(classifier))
+                plt.subplot(1, 2, 2)
+                self.plot_confusion_matrix(conf_mat_test, classes=[str(i) for i in range(no_of_classes)],
+                                           title='Test confusion matrix for {}'.format(classifier))
+                plt.show()
 
     @staticmethod
     def plot_confusion_matrix(cm, classes, title, normalize=False, cmap=plt.cm.Blues, font_size='x-large'):
@@ -57,19 +59,21 @@ class ResultsPresenter:
     def show_box_plots(self):
         accuracies = {'train': [], 'test': []}
         names = []
-        for name, values in self.results.items():
-            accuracies['train'].append([self.calc_accuracy_from_cm(v['conf_matrix_train']) for v in values])
-            accuracies['test'].append([self.calc_accuracy_from_cm(v['conf_matrix_test']) for v in values])
-            names.append(name)
+        for dataset in self.results:
+            print(dataset)
+            for classifier, values in self.results[dataset].items():
+                accuracies['train'].append([self.calc_accuracy_from_cm(v['conf_matrix_train']) for v in values])
+                accuracies['test'].append([self.calc_accuracy_from_cm(v['conf_matrix_test']) for v in values])
+                names.append(classifier)
 
-        plt.figure(figsize=(15, 7))
-        plt.subplot(1, 2, 1)
-        plt.title('Accuracy on train set', fontsize='x-large')
-        plt.boxplot(accuracies['train'], labels=names)
-        plt.subplot(1, 2, 2)
-        plt.title('Accuracy on test set', fontsize='x-large')
-        plt.boxplot(accuracies['test'], labels=names)
-        plt.show()
+            plt.figure(figsize=(15, 7))
+            plt.subplot(1, 2, 1)
+            plt.title('Accuracy on train set', fontsize='x-large')
+            plt.boxplot(accuracies['train'], labels=names)
+            plt.subplot(1, 2, 2)
+            plt.title('Accuracy on test set', fontsize='x-large')
+            plt.boxplot(accuracies['test'], labels=names)
+            plt.show()
 
     @staticmethod
     def calc_accuracy_from_cm(cm):
