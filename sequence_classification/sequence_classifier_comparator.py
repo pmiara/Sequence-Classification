@@ -20,15 +20,15 @@ class SequenceClassifierComparator:
             params = {}
         self.classifier_triplets.append((classifier, params, sequence_transformer))
 
-    def add_dataset(self, X, y, name):
-        self.datasets.append(Dataset(X, y, name))
-
     def add_dataset(self, loader, name=None):
         if name:
             dataset = loader.load_data(name)
         else:
             dataset = loader.load_data()
         self.datasets.append(dataset)
+
+    def add_other_dataset(self, X, y, name):
+        self.datasets.append(Dataset(X, y, name))
 
     def fit_predict_all(self, split_params=None, rounds=3):
         if split_params is None:
