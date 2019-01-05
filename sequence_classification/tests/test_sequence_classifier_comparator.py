@@ -1,4 +1,4 @@
-from sequence_classifier_comparator import SequenceClassifierComparator
+from sequence_classification.sequence_classifier_comparator import SequenceClassifierComparator
 import numpy as np
 
 from .mock import MockClassifier, MockReader, MockWriter, PARAMS, NAME, CONF_TRAIN_MAT, CONF_TEST_MAT

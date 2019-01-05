@@ -1,7 +1,7 @@
-from classifiers.sequence_classifier import SequenceClassifier
-from sequence_transformer import SequenceTransformer
-from results_writer import ResultsWriter
-from results_reader import ResultsReader
+from sequence_classification.classifiers.sequence_classifier import SequenceClassifier
+from sequence_classification.sequence_transformer import SequenceTransformer
+from sequence_classification.results_writer import ResultsWriter
+from sequence_classification.results_reader import ResultsReader
 
 
 NAME = 'name'
