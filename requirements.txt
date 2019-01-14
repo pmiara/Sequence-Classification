@@ -6,3 +6,6 @@ pandas
 pytest
 matplotlib
 scikit-posthocs
+scikit-learn
+numpy
+scipy
