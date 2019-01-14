@@ -25,7 +25,7 @@ def test_should_save_correctly_predicted_data():
     seq_class_comparator.add_classifier(test_class)
     X = [1,2,3,4,5]
     y = [1,2,3,4,5]
-    seq_class_comparator.add_other_dataset(X, y, DATASET_NAME)
+    seq_class_comparator.add_custom_dataset(X, y, DATASET_NAME)
 
     # when
     seq_class_comparator.fit_predict_all()
@@ -46,7 +46,7 @@ def test_should_save_wrong_predicted_data():
     seq_class_comparator.add_classifier(test_class)
     X = [1,2,3,4,5]
     y = [2,3,4,5,1]
-    seq_class_comparator.add_other_dataset(X, y, DATASET_NAME)
+    seq_class_comparator.add_custom_dataset(X, y, DATASET_NAME)
 
     # when
     seq_class_comparator.fit_predict_all()
@@ -65,7 +65,7 @@ def test_should_change_name_and_params():
     seq_class_comparator.add_classifier(test_class, params=params)
     X = [1,2,3,4,5]
     y = [1,2,3,4,5]
-    seq_class_comparator.add_other_dataset(X, y, DATASET_NAME)
+    seq_class_comparator.add_custom_dataset(X, y, DATASET_NAME)
 
     # when
     seq_class_comparator.fit_predict_all()

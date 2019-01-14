@@ -27,7 +27,7 @@ class SequenceClassifierComparator:
             dataset = loader.load_data()
         self.datasets.append(dataset)
 
-    def add_other_dataset(self, X, y, name):
+    def add_custom_dataset(self, X, y, name):
         self.datasets.append(Dataset(X, y, name))
 
     def fit_predict_all(self, split_params=None, rounds=3):
