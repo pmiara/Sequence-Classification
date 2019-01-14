@@ -24,7 +24,7 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.batch_size = batch_size
         self.verbose = verbose
 
-    def fit(self, X, y):
+    def _fit(self, X, y):
         X = self.transform(X)
         y = to_categorical(y)
         self.model_ = Sequential()
@@ -34,7 +34,7 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.model_.fit(X, y, epochs=self.epochs, batch_size=self.batch_size, verbose=self.verbose)
         return self
 
-    def predict(self, X):
+    def _predict(self, X):
         X = self.transform(X)
         return np.argmax(self.model_.predict(X), axis=1)
 

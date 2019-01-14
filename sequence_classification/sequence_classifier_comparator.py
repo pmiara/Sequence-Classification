@@ -6,19 +6,19 @@ from .datasets.utils import Dataset
 
 
 class SequenceClassifierComparator:
-    def __init__(self, writer, reader, classifier_triplets=None, cv=3):
-        if classifier_triplets is None:
-            classifier_triplets = []
-        self.classifier_triplets = classifier_triplets
+    def __init__(self, writer, reader, classifiers_with_params=None, cv=3):
+        if classifiers_with_params is None:
+            classifiers_with_params = []
+        self.classifiers_with_params = classifiers_with_params
         self.writer = writer
         self.reader = reader
         self.datasets = []
         self.cv = cv
 
-    def add_classifier(self, classifier, params=None, sequence_transformer=None):
+    def add_classifier(self, classifier, params=None):
         if params is None:
             params = {}
-        self.classifier_triplets.append((classifier, params, sequence_transformer))
+        self.classifiers_with_params.append((classifier, params))
 
     def add_dataset(self, loader, name=None):
         if name:
@@ -36,10 +36,9 @@ class SequenceClassifierComparator:
         for dataset in self.datasets:
             for i in range(rounds):
                 X_train, X_test, y_train, y_test = train_test_split(dataset.X, dataset.y, **split_params)
-                for classifier, params, transformer in self.classifier_triplets:
+                for classifier, params in self.classifiers_with_params:
                     print('{}, round {}, with {}-fold cross validation'.format(classifier.name, i + 1, self.cv))
-                    X_train_transform, X_test_transform = self.apply_transformer(X_train, X_test, transformer)
-                    results = self.fit_predict(X_train_transform, y_train, X_test_transform, y_test, classifier, params)
+                    results = self.fit_predict(X_train, y_train, X_test, y_test, classifier, params)
                     self.writer.write_results(dataset.name, classifier.name, *results)
 
     def fit_predict(self, X_train, y_train, X_test, y_test, classifier, params):
@@ -56,18 +55,8 @@ class SequenceClassifierComparator:
         conf_matrix_test = confusion_matrix(y_test, y_pred_test)
         return best_params, conf_matrix_train, conf_matrix_test
 
-    @staticmethod
-    def apply_transformer(X_train, X_test, transformer):
-        if transformer is not None:
-            X_train_transform = transformer.fit_transform(X_train)
-            X_test_transform = transformer.transform(X_test)
-        else:
-            X_train_transform = X_train
-            X_test_transform = X_test
-        return X_train_transform, X_test_transform
-
     def get_presenter(self):
         dataset_names = [d.name for d in self.datasets]
-        classifier_names = [c[0].name for c in self.classifier_triplets]
+        classifier_names = [c[0].name for c in self.classifiers_with_params]
         results = self.reader.read_results(dataset_names, classifier_names)
         return ResultsPresenter(results)

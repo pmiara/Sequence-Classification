@@ -18,14 +18,14 @@ class KNNClassifier(SequenceClassifier):
         self.max_sequence_len = max_sequence_len
         self.n_neighbors = n_neighbors
 
-    def fit(self, X, y):
+    def _fit(self, X, y):
         X = sequence.pad_sequences(X, maxlen=self.max_sequence_len)
         self.model_ = KNeighborsClassifier(
             metric=self.metric, n_neighbors=self.n_neighbors)
         self.model_.fit(X, y)
         return self
 
-    def predict(self, X):
+    def _predict(self, X):
         X = sequence.pad_sequences(X, maxlen=self.max_sequence_len)
         return self.model_.predict(X)
 
