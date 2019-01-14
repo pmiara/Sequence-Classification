@@ -4,7 +4,7 @@ from keras.datasets import imdb
 from .utils import DatasetLoader, Dataset
 
 
-class IMDbDataset(DatasetLoader, ):
+class IMDbDataset(DatasetLoader):
 
     @staticmethod
     def load_data(name='IMDb'):
