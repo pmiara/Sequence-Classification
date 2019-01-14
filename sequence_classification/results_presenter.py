@@ -1,8 +1,8 @@
 import itertools
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import friedmanchisquare, f_oneway, ttest_ind
-from scikit_posthocs import posthoc_nemenyi_friedman
+
+from .statistical_tests import StatisticalTests
 
 FONT_SIZE = 'x-large'
 
@@ -15,7 +15,7 @@ class ResultsPresenter:
 
     def __init__(self, results):
         self.results = results
-        self.measurements = None
+        self.statistical_tests = StatisticalTests(self.prepare_measurements())
 
     def show_all(self):
         self.show_confusion_matrices()
@@ -85,51 +85,17 @@ class ResultsPresenter:
     def calc_accuracy_from_cm(cm):
         return cm.diagonal().sum() / cm.sum()
 
-    def prepare_measurements(self):
-        if self.measurements:
-            return
-        self.measurements = []
-        for d in self.results:
-            self.measurements.append([])
-            for classifier_name, rounds in self.results[d].items():
-                self.measurements[-1].append([])
+    def prepare_measurements(self, source='conf_matrix_test'):
+        if not self.results:
+            raise AttributeError('self.results is not defined')
+        measurements = []
+        for dataset_result in self.results.values():
+            dataset_measurements = []
+            for classifier_name, rounds in dataset_result.items():
+                classifier_measurements = []
                 for r in rounds:
-                    acc = self.calc_accuracy_from_cm(r['conf_matrix_test'])
-                    self.measurements[-1][-1].append(acc)
-    
-    def calc_friedman_value(self):
-        self.prepare_measurements()
-        avg = []
-        for dataset in self.measurements:
-            avg.append([])
-            for classifier in dataset:
-                avg[-1].append(np.average(classifier))
-        return friedmanchisquare(*avg)
-
-    def calc_anova_value(self):
-        self.prepare_measurements()
-        anova = []
-        for dataset in self.measurements:
-            anova.append(f_oneway(*dataset))
-        return anova
-
-    def calc_nemenyi(self):
-        self.prepare_measurements()
-        avg = []
-        for dataset in self.measurements:
-            avg.append([])
-            for classifier in dataset:
-                avg[-1].append(np.average(classifier))
-        return posthoc_nemenyi_friedman(avg)
-
-    def calc_t_student(self):
-        self.prepare_measurements()
-        t_student = []
-        for dataset in self.measurements:
-            matrix = []
-            for classifier1 in dataset:
-                matrix.append([])
-                for classifier2 in dataset:
-                    matrix[-1].append(ttest_ind(classifier1, classifier2))
-            t_student.append(matrix)
-        return t_student
+                    acc = self.calc_accuracy_from_cm(r[source])
+                    classifier_measurements.append(acc)
+                dataset_measurements.append(classifier_measurements)
+            measurements.append(dataset_measurements)
+        return measurements
