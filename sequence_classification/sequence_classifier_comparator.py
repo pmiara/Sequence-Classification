@@ -34,6 +34,8 @@ class SequenceClassifierComparator:
         if split_params is None:
             split_params = {}
         for dataset in self.datasets:
+            print('Running for {} dataset'.format(dataset.name))
+            print('********************************************')
             for i in range(rounds):
                 X_train, X_test, y_train, y_test = train_test_split(dataset.X, dataset.y, **split_params)
                 for classifier, params, transformer in self.classifier_triplets:

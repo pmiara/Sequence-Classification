@@ -15,11 +15,13 @@ class ResultsPresenter:
 
     def __init__(self, results):
         self.results = results
-        self.statistical_tests = StatisticalTests(self.prepare_measurements())
 
     def show_all(self):
         self.show_confusion_matrices()
         self.show_box_plots()
+        statistical_tests = self.get_statistical_tests(alpha=0.05)
+        statistical_tests.compare_on_datasets_separately()
+        statistical_tests.compare_on_all_datasets()
 
     def show_confusion_matrices(self):
         for dataset in self.results:
@@ -63,10 +65,11 @@ class ResultsPresenter:
         plt.xlabel('Predicted label')
 
     def show_box_plots(self):
-        accuracies = {'train': [], 'test': []}
-        names = []
         for dataset in self.results:
             print(dataset)
+            accuracies = {'train': [], 'test': []}
+            names = []
+
             for classifier_name, values in self.results[dataset].items():
                 accuracies['train'].append([self.calc_accuracy_from_cm(v['conf_matrix_train']) for v in values])
                 accuracies['test'].append([self.calc_accuracy_from_cm(v['conf_matrix_test']) for v in values])
@@ -84,6 +87,11 @@ class ResultsPresenter:
     @staticmethod
     def calc_accuracy_from_cm(cm):
         return cm.diagonal().sum() / cm.sum()
+
+    def get_statistical_tests(self, alpha, rounded=3, source='conf_matrix_test'):
+        dataset_names = [dataset for dataset in self.results]
+        classifier_names = [classifier for classifier in self.results[dataset_names[0]]]
+        return StatisticalTests(alpha, self.prepare_measurements(source), dataset_names, classifier_names, rounded)
 
     def prepare_measurements(self, source='conf_matrix_test'):
         if not self.results:
