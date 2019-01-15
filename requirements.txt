@@ -10,3 +10,4 @@ scikit-learn
 numpy
 scipy
 orange3
+keras

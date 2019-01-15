@@ -1,5 +1,4 @@
 import pytest
-import numpy as np
 
 from sequence_classification.statistical_tests import StatisticalTests
 
