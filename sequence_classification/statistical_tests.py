@@ -16,12 +16,13 @@ class StatisticalTests:
         self.rounded = rounded
 
     def compare_on_datasets_separately(self):
-        for dataset, dataset_name in zip(self.measurements, self.dataset_names):
+        for dataset_name in self.dataset_names:
             print('Tests for {} dataset'.format(dataset_name))
-            self.compare_on_single_dataset(dataset)
+            self.compare_on_single_dataset(dataset_name)
             print('\n')
 
-    def compare_on_single_dataset(self, dataset_measurements):
+    def compare_on_single_dataset(self, dataset_name):
+        dataset_measurements = self.measurements[self.dataset_names.index(dataset_name)]
         if self.check_anova_assumptions(dataset_measurements):
             anova = self.calc_anova_p_value(dataset_measurements)
             if anova < self.alpha:
