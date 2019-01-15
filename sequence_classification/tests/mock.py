@@ -10,15 +10,15 @@ CONF_TEST_MAT = 'conf_matrix_test'
 
 
 class MockClassifier(SequenceClassifier):
-    def __init__(self, name='TEST', x=''):
-        self.name = name
+    def __init__(self, name='TEST', x='', transformer=None):
+        super(MockClassifier, self).__init__(name, transformer)
         self.x = x
 
-    def predict(self, X):
-        return X
-
-    def fit(self, X, y):
+    def _fit(self, X, y):
         pass
+
+    def _predict(self, X):
+        return X
 
 class MockTransformer(SequenceTransformer):
     def fit_transform(self, raw_data):
@@ -28,16 +28,18 @@ class MockTransformer(SequenceTransformer):
         return raw_data
 
 
-class MockWriter():
+class MockWriter:
     def __init__(self, base_dir="results", file_prefix=""):
         self.base_dir = base_dir
         self.file_prefix = file_prefix
+        self.results = None
 
     def write_results(self, dataset, classifier, params, conf_matrix_train, conf_matrix_test):
         self.results = {DATASET: dataset, CLASSIFIER: classifier, PARAMS: params, CONF_TRAIN_MAT: conf_matrix_train,
                         CONF_TEST_MAT: conf_matrix_test}
 
 
-class MockReader():
-    def read_results(self, results):
+class MockReader:
+    @staticmethod
+    def read_results(results):
         return results
