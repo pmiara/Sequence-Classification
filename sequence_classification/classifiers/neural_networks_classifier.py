@@ -10,7 +10,7 @@ from .sequence_classifier import SequenceClassifier
 class NeuralNetworksClassifier(SequenceClassifier):
     def __init__(self, name='Neural Networks', transformer=None, memory_units=100, max_seq_length=500, activation='sigmoid',
                  loss_function='categorical_crossentropy', optimizer='adam', metrics=None, epochs=3, batch_size=64, verbose=1):
-        super(NeuralNetworksClassifier, self).__init__(name)
+        super(NeuralNetworksClassifier, self).__init__(name, transformer)
         self.max_seq_length = max_seq_length
         self.memory_units = memory_units
         self.activation = activation
