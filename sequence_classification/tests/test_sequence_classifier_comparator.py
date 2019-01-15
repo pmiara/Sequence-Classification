@@ -14,7 +14,7 @@ def test_should_add_classifier():
     seq_class_comparator.add_classifier(test_class)
 
     # then
-    assert len(seq_class_comparator.classifier_triplets) == 1
+    assert len(seq_class_comparator.classifiers_with_params) == 1
 
 
 def test_should_save_correctly_predicted_data():

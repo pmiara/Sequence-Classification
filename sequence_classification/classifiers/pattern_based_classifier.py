@@ -5,15 +5,15 @@ from .sequence_classifier import SequenceClassifier
 
 
 class PatternBasedClassifier(SequenceClassifier):
-    def __init__(self, name='PatternBased', min_support=1, min_len=1, max_len=1000, k=10):
-        super(PatternBasedClassifier, self).__init__(name)
+    def __init__(self, name='PatternBased', transformer=None, min_support=1, min_len=1, max_len=1000, k=10):
+        super(PatternBasedClassifier, self).__init__(name, transformer)
         self.min_support = min_support
         self.min_len = min_len
         self.max_len = max_len
         self.k = k
         self.rules = None
 
-    def fit(self, X_train, y_train):
+    def _fit(self, X_train, y_train):
         df = pd.DataFrame(X_train, columns=['X'])
         df['y'] = y_train
         rules = df.groupby('y').apply(lambda rows: self._find_frequent_patterns(rows['X'].tolist()))
@@ -23,7 +23,7 @@ class PatternBasedClassifier(SequenceClassifier):
         rules = rules.sort_values(['confidence', 'support', 'length'], ascending=False)
         self.rules = rules.reset_index(level=1, drop=True).reset_index()
 
-    def predict(self, X):
+    def _predict(self, X):
         result = []
         for x in X:
             rules_satisfying_condition = self.rules['pattern'].apply(lambda patt: self._contains_pattern(x, patt))
