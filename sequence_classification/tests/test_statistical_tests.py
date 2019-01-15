@@ -20,7 +20,7 @@ def test_correct_anova(statistical_tests):
     assert result == 0.075
 
 def test_correct_round(statistical_tests):
-    statistical_tests.rounded = 2
+    statistical_tests.round_precision = 2
     dataset_measurements = statistical_tests.measurements[0]
     result = statistical_tests.calc_anova_p_value(dataset_measurements)
     assert result == 0.07

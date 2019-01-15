@@ -77,7 +77,7 @@ def results_presenter():
 
 
 def test_should_prepare_measurements_for_test(results_presenter):
-    result = results_presenter.prepare_measurements()
+    result = results_presenter._prepare_measurements()
     expected = [
         [[0.768, 0.828], [0.768, 0.828], [0.692, 0.636]],
         [[0.792, 0.804], [0.792, 0.804], [0.752, 0.696]],
@@ -87,7 +87,7 @@ def test_should_prepare_measurements_for_test(results_presenter):
 
 
 def test_should_prepare_measurements_for_train(results_presenter):
-    result = results_presenter.prepare_measurements(source='conf_matrix_train')
+    result = results_presenter._prepare_measurements(results_type='conf_matrix_train')
     expected = [
         [[1.0, 1.0], [1.0, 1.0], [0.965, 0.928]],
         [[1.0, 1.0], [1.0, 1.0], [0.977, 0.925]],

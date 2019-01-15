@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 
 from .statistical_tests import StatisticalTests
 
-FONT_SIZE = 'x-large'
 
+FONT_SIZE = 'x-large'
+DEFAULT_RESULTS_TYPE = 'test'
 
 class ResultsPresenter:
     """
@@ -16,22 +17,22 @@ class ResultsPresenter:
     def __init__(self, results):
         self.results = results
 
-    def show_all(self, results_type='test'):
+    def show_all(self, results_type=DEFAULT_RESULTS_TYPE):
         self.show_all_confusion_matrices(results_type)
         self.show_box_plots(results_type)
         statistical_tests = self.get_statistical_tests(alpha=0.05, results_type=results_type)
         statistical_tests.compare_on_datasets_separately()
         statistical_tests.compare_on_all_datasets()
 
-    def show_all_confusion_matrices(self, results_type='test'):
+    def show_all_confusion_matrices(self, results_type=DEFAULT_RESULTS_TYPE):
         for dataset in self.results:
             self.show_confusion_matrices_for_dataset(dataset, results_type)
 
-    def show_confusion_matrices_for_dataset(self, dataset, results_type='test'):
+    def show_confusion_matrices_for_dataset(self, dataset, results_type=DEFAULT_RESULTS_TYPE):
         for classifier_name in self.results[dataset]:
             self.show_confusion_matrix(dataset, classifier_name, results_type)
 
-    def show_confusion_matrix(self, dataset, classifier_name, results_type='test'):
+    def show_confusion_matrix(self, dataset, classifier_name, results_type=DEFAULT_RESULTS_TYPE):
         results_type = self.get_results_type(results_type)
         values = self.results[dataset][classifier_name]
         confusion_matrix = np.mean([v[results_type] for v in values], axis=0).astype('int')
@@ -45,7 +46,8 @@ class ResultsPresenter:
         Normalization can be applied by setting `normalize=True`.
         """
         if normalize:
-            cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+            sums_in_rows = cm.sum(axis=1)[:, np.newaxis]
+            cm = cm / sums_in_rows
 
         no_of_classes = len(cm)
         classes = [str(i) for i in range(no_of_classes)]
@@ -68,11 +70,11 @@ class ResultsPresenter:
         plt.xlabel('Predicted label')
         plt.show()
 
-    def show_box_plots(self, results_type='test'):
+    def show_box_plots(self, results_type=DEFAULT_RESULTS_TYPE):
         for dataset in self.results:
             self.show_box_plot(dataset, results_type)
 
-    def show_box_plot(self, dataset, results_type='test'):
+    def show_box_plot(self, dataset, results_type=DEFAULT_RESULTS_TYPE):
         results_type = self.get_results_type(results_type)
         accuracies, names = [], []
 
@@ -85,11 +87,11 @@ class ResultsPresenter:
         plt.boxplot(accuracies, labels=names)
         plt.show()
 
-    def get_statistical_tests(self, alpha, rounded=3, results_type='test'):
+    def get_statistical_tests(self, alpha, round_precision=3, results_type=DEFAULT_RESULTS_TYPE):
         results_type = self.get_results_type(results_type)
         dataset_names = [dataset for dataset in self.results]
         classifier_names = [classifier for classifier in self.results[dataset_names[0]]]
-        return StatisticalTests(alpha, self._prepare_measurements(results_type), dataset_names, classifier_names, rounded)
+        return StatisticalTests(alpha, self._prepare_measurements(results_type), dataset_names, classifier_names, round_precision)
 
     def _prepare_measurements(self, results_type='conf_matrix_test'):
         if not self.results:
