@@ -10,15 +10,15 @@ CONF_TEST_MAT = 'conf_matrix_test'
 
 
 class MockClassifier(SequenceClassifier):
-    def __init__(self, name='TEST', x=''):
-        super(MockClassifier, self).__init__(name)
+    def __init__(self, name='TEST', x='', transformer=None):
+        super(MockClassifier, self).__init__(name, transformer)
         self.x = x
 
-    def predict(self, X):
-        return X
-
-    def fit(self, X, y):
+    def _fit(self, X, y):
         pass
+
+    def _predict(self, X):
+        return X
 
 class MockTransformer(SequenceTransformer):
     def fit_transform(self, raw_data):
