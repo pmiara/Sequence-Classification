@@ -1,6 +1,5 @@
 from sequence_classification.classifiers.sequence_classifier import SequenceClassifier
-from sequence_classification.sequence_transformer import SequenceTransformer
-
+from sequence_classification.transformers.sequence_transformer import SequenceTransformer
 
 PARAMS = 'params'
 DATASET = 'dataset'

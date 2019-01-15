@@ -8,7 +8,7 @@ class ValleyDataset(DatasetLoader):
     @staticmethod
     def load_data(name='Valley'):
         valley_data = []
-        with open(ValleyDataset.get_dataset_file(['sentiment', 'valley_data.txt']), 'r') as f:
+        with open(ValleyDataset.get_dataset_file(['valley', 'valley_data.txt']), 'r') as f:
             file_content = f.readlines()
             for line in file_content:
                 values = line.split('\t')
