@@ -42,4 +42,3 @@ class NeuralNetworksClassifier(SequenceClassifier):
         X = sequence.pad_sequences(X, maxlen=self.max_seq_length)
         X = X[:, :, np.newaxis]
         return X
-

@@ -25,7 +25,7 @@ class SequenceClassifier(BaseEstimator):
         self.transformer = transformer
 
     def fit(self, X, y):
-        if self.transformer is not None:
+        if self.transformer:
             transformed_data = self.transformer.fit_transform(X)
             return self._fit(transformed_data, y)
         return self._fit(X, y)
@@ -51,7 +51,7 @@ class SequenceClassifier(BaseEstimator):
         raise NotImplementedError
 
     def predict(self, X):
-        if self.transformer is not None:
+        if self.transformer:
             transformed_data = self.transformer.transform(X)
             return self._predict(transformed_data)
         return self._predict(X)
@@ -70,5 +70,4 @@ class SequenceClassifier(BaseEstimator):
         -----------
         y: vector of predicted classes, same length as X
         """
-
         raise NotImplementedError
