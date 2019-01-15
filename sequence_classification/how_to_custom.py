@@ -1,4 +1,4 @@
-from sequence_transformer import SequenceTransformer
+from transformers.sequence_transformer import SequenceTransformer
 from classifiers.sequence_classifier import SequenceClassifier
 
 

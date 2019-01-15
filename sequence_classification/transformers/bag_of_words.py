@@ -1,4 +1,4 @@
-from ..sequence_transformer import SequenceTransformer
+from .sequence_transformer import SequenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 
 
