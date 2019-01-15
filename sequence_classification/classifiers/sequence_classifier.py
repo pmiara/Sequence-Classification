@@ -20,7 +20,7 @@ class SequenceClassifier(BaseEstimator):
     Source: http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/
     """
 
-    def __init__(self, name, transformer=None):
+    def __init__(self, name, transformer):
         self.name = name
         self.transformer = transformer
 

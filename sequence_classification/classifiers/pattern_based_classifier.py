@@ -5,8 +5,8 @@ from .sequence_classifier import SequenceClassifier
 
 
 class PatternBasedClassifier(SequenceClassifier):
-    def __init__(self, name='PatternBased', min_support=1, min_len=1, max_len=1000, k=10):
-        super(PatternBasedClassifier, self).__init__(name)
+    def __init__(self, name='PatternBased', transformer=None, min_support=1, min_len=1, max_len=1000, k=10):
+        super(PatternBasedClassifier, self).__init__(name, transformer)
         self.min_support = min_support
         self.min_len = min_len
         self.max_len = max_len

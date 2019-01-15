@@ -6,8 +6,8 @@ from .sequence_classifier import SequenceClassifier
 
 
 class KNNClassifier(SequenceClassifier):
-    def __init__(self, name='KNN', metric='editdistance', max_sequence_len=500, n_neighbors=3):
-        super(KNNClassifier, self).__init__(name)
+    def __init__(self, name='KNN', transformer=None, metric='editdistance', max_sequence_len=500, n_neighbors=3):
+        super(KNNClassifier, self).__init__(name, transformer)
         if metric == 'editdistance':
             metric = editdistance.eval
         elif metric == 'longest_common_subsequence':
