@@ -8,9 +8,9 @@ from .sequence_classifier import SequenceClassifier
 
 
 class NeuralNetworksClassifier(SequenceClassifier):
-    def __init__(self, name='Neural Networks', memory_units=100, max_seq_length=500, activation='sigmoid',
+    def __init__(self, name='Neural Networks', transformer=None, memory_units=100, max_seq_length=500, activation='sigmoid',
                  loss_function='categorical_crossentropy', optimizer='adam', metrics=None, epochs=3, batch_size=64, verbose=1):
-        super(NeuralNetworksClassifier, self).__init__(name)
+        super(NeuralNetworksClassifier, self).__init__(name, transformer)
         self.max_seq_length = max_seq_length
         self.memory_units = memory_units
         self.activation = activation
@@ -24,7 +24,7 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.batch_size = batch_size
         self.verbose = verbose
 
-    def fit(self, X, y):
+    def _fit(self, X, y):
         X = self.transform(X)
         y = to_categorical(y)
         self.model_ = Sequential()
@@ -34,7 +34,7 @@ class NeuralNetworksClassifier(SequenceClassifier):
         self.model_.fit(X, y, epochs=self.epochs, batch_size=self.batch_size, verbose=self.verbose)
         return self
 
-    def predict(self, X):
+    def _predict(self, X):
         X = self.transform(X)
         return np.argmax(self.model_.predict(X), axis=1)
 
@@ -42,4 +42,3 @@ class NeuralNetworksClassifier(SequenceClassifier):
         X = sequence.pad_sequences(X, maxlen=self.max_seq_length)
         X = X[:, :, np.newaxis]
         return X
-
