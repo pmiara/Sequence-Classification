@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sequence_classification.tests.test_results_presenter &mdash; Sequence Classification 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Sequence Classification
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../sequence_classification.html">sequence_classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">New README in rst file format</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Sequence Classification</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sequence_classification.tests.test_results_presenter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sequence_classification.tests.test_results_presenter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sequence_classification.results_presenter</span> <span class="k">import</span> <span class="n">ResultsPresenter</span>
+
+
+<div class="viewcode-block" id="results_presenter"><a class="viewcode-back" href="../../../sequence_classification.tests.html#sequence_classification.tests.test_results_presenter.results_presenter">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">results_presenter</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;dataset1&#39;</span><span class="p">:</span>
+            <span class="p">{</span><span class="s1">&#39;SVM&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">370</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">380</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">36</span><span class="p">],</span> <span class="p">[</span><span class="mi">22</span><span class="p">,</span> <span class="mi">92</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">382</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">368</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">98</span><span class="p">,</span> <span class="mi">26</span><span class="p">],</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">109</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}],</span>
+            <span class="s1">&#39;KNN&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">370</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">380</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">36</span><span class="p">],</span> <span class="p">[</span><span class="mi">22</span><span class="p">,</span> <span class="mi">92</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">382</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">368</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">98</span><span class="p">,</span> <span class="mi">26</span><span class="p">],</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">109</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}],</span>
+            <span class="s1">&#39;HMM&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">348</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">376</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">69</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">106</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">332</span><span class="p">,</span> <span class="mi">50</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">364</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">46</span><span class="p">,</span> <span class="mi">78</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">113</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}]},</span>
+        <span class="s1">&#39;dataset2&#39;</span><span class="p">:</span>
+            <span class="p">{</span><span class="s1">&#39;SVM&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">372</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">378</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">107</span><span class="p">,</span> <span class="mi">27</span><span class="p">],</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">91</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">386</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">364</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}],</span>
+            <span class="s1">&#39;KNN&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">372</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">378</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">107</span><span class="p">,</span> <span class="mi">27</span><span class="p">],</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">91</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">386</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">364</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}],</span>
+            <span class="s1">&#39;HMM&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">364</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">369</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">46</span><span class="p">],</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">100</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">385</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">55</span><span class="p">,</span> <span class="mi">309</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">113</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">69</span><span class="p">,</span> <span class="mi">61</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}]},</span>
+        <span class="s1">&#39;dataset3&#39;</span><span class="p">:</span>
+            <span class="p">{</span><span class="s1">&#39;SVM&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">388</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span> <span class="p">[</span>  <span class="mi">0</span><span class="p">,</span> <span class="mi">362</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">94</span><span class="p">,</span>  <span class="mi">24</span><span class="p">],</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">102</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">377</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">373</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">100</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}],</span>
+            <span class="s1">&#39;KNN&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">388</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">362</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">94</span><span class="p">,</span> <span class="mi">24</span><span class="p">],</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">102</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">377</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">373</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">28</span><span class="p">],</span> <span class="p">[</span><span class="mi">21</span><span class="p">,</span> <span class="mi">100</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}],</span>
+            <span class="s1">&#39;HMM&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">384</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">27</span><span class="p">,</span> <span class="mi">335</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">92</span><span class="p">,</span> <span class="mi">26</span><span class="p">],</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">90</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+                <span class="p">{</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">367</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">369</span><span class="p">]]),</span>
+                 <span class="s1">&#39;conf_matrix_test&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">86</span><span class="p">,</span> <span class="mi">43</span><span class="p">],</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">101</span><span class="p">]]),</span>
+                 <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="p">{}}]}}</span>
+    <span class="k">return</span> <span class="n">ResultsPresenter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_should_prepare_measurements_for_test"><a class="viewcode-back" href="../../../sequence_classification.tests.html#sequence_classification.tests.test_results_presenter.test_should_prepare_measurements_for_test">[docs]</a><span class="k">def</span> <span class="nf">test_should_prepare_measurements_for_test</span><span class="p">(</span><span class="n">results_presenter</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">results_presenter</span><span class="o">.</span><span class="n">_prepare_measurements</span><span class="p">()</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[[</span><span class="mf">0.768</span><span class="p">,</span> <span class="mf">0.828</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.768</span><span class="p">,</span> <span class="mf">0.828</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.692</span><span class="p">,</span> <span class="mf">0.636</span><span class="p">]],</span>
+        <span class="p">[[</span><span class="mf">0.792</span><span class="p">,</span> <span class="mf">0.804</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.792</span><span class="p">,</span> <span class="mf">0.804</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.752</span><span class="p">,</span> <span class="mf">0.696</span><span class="p">]],</span>
+        <span class="p">[[</span><span class="mf">0.784</span><span class="p">,</span> <span class="mf">0.804</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.784</span><span class="p">,</span> <span class="mf">0.804</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.728</span><span class="p">,</span> <span class="mf">0.748</span><span class="p">]]</span>
+    <span class="p">]</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="n">expected</span></div>
+
+
+<div class="viewcode-block" id="test_should_prepare_measurements_for_train"><a class="viewcode-back" href="../../../sequence_classification.tests.html#sequence_classification.tests.test_results_presenter.test_should_prepare_measurements_for_train">[docs]</a><span class="k">def</span> <span class="nf">test_should_prepare_measurements_for_train</span><span class="p">(</span><span class="n">results_presenter</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">results_presenter</span><span class="o">.</span><span class="n">_prepare_measurements</span><span class="p">(</span><span class="n">results_type</span><span class="o">=</span><span class="s1">&#39;conf_matrix_train&#39;</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.965</span><span class="p">,</span> <span class="mf">0.928</span><span class="p">]],</span>
+        <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.977</span><span class="p">,</span> <span class="mf">0.925</span><span class="p">]],</span>
+        <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.959</span><span class="p">,</span> <span class="mf">0.981</span><span class="p">]]</span>
+    <span class="p">]</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jakub Berezowski, Magda Lipowska, Piotr Miara, Grzegorz Szczepaniak
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

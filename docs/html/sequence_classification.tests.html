@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tests &mdash; Sequence Classification 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="transformers" href="sequence_classification.transformers.html" />
+    <link rel="prev" title="classifiers" href="sequence_classification.classifiers.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sequence Classification
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="sequence_classification.html">sequence_classification</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sequence_classification.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sequence_classification.classifiers.html">classifiers</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-sequence_classification.tests.mock">tests.mock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-sequence_classification.tests.test_results_presenter">test_results_presenter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-sequence_classification.tests.test_sequence_classifier_comparator">test_sequence_classifier_comparator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-sequence_classification.tests.test_statistical_tests">test_statistical_tests</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sequence_classification.transformers.html">transformers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sequence_classification.html#module-sequence_classification.how_to_custom">how_to_custom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequence_classification.html#module-sequence_classification.results_presenter">results_presenter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequence_classification.html#module-sequence_classification.results_reader">results_reader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequence_classification.html#module-sequence_classification.results_writer">results_writer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequence_classification.html#module-sequence_classification.sequence_classifier_comparator">sequence_classifier_comparator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sequence_classification.html#module-sequence_classification.statistical_tests">statistical_tests</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sequence Classification</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="sequence_classification.html">sequence_classification</a> &raquo;</li>
+        
+      <li>tests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sequence_classification.tests.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tests">
+<h1>tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-sequence_classification.tests.mock">
+<span id="tests-mock"></span><h2>tests.mock<a class="headerlink" href="#module-sequence_classification.tests.mock" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sequence_classification.tests.mock.MockClassifier">
+<em class="property">class </em><code class="descname">MockClassifier</code><span class="sig-paren">(</span><em>name='TEST'</em>, <em>x=''</em>, <em>transformer=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sequence_classification.classifiers.html#sequence_classification.classifiers.sequence_classifier.SequenceClassifier" title="sequence_classification.classifiers.sequence_classifier.SequenceClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence_classification.classifiers.sequence_classifier.SequenceClassifier</span></code></a></p>
+<dl class="method">
+<dt id="sequence_classification.tests.mock.MockClassifier._fit">
+<code class="descname">_fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockClassifier._fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockClassifier._fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit method is responsible mainly for training model.</p>
+<p>It should also check the parameters.
+New attributes can be also added here to the object - they should be ended by _ at the end, e.g. <cite>self.fitted_</cite>.
+Fit method should return self (for compatibility reasons with common interface of scikit-learn).
+Source: <a class="reference external" href="http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/">http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/</a></p>
+<p>X : features to train on
+y: vector of classes to train on, same length as X</p>
+<p>self: the classifier itself</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sequence_classification.tests.mock.MockClassifier._predict">
+<code class="descname">_predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockClassifier._predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockClassifier._predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict method is responsible for predicting the results based on X.</p>
+<p>It should return predictions.</p>
+<p>X : features to predict from</p>
+<p>y: vector of predicted classes, same length as X</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sequence_classification.tests.mock.MockReader">
+<em class="property">class </em><code class="descname">MockReader</code><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="sequence_classification.tests.mock.MockReader.read_results">
+<em class="property">static </em><code class="descname">read_results</code><span class="sig-paren">(</span><em>results</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockReader.read_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockReader.read_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sequence_classification.tests.mock.MockTransformer">
+<em class="property">class </em><code class="descname">MockTransformer</code><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sequence_classification.transformers.html#sequence_classification.transformers.sequence_transformer.SequenceTransformer" title="sequence_classification.transformers.sequence_transformer.SequenceTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence_classification.transformers.sequence_transformer.SequenceTransformer</span></code></a></p>
+<dl class="method">
+<dt id="sequence_classification.tests.mock.MockTransformer.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>raw_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockTransformer.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockTransformer.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sequence_classification.tests.mock.MockTransformer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>raw_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockTransformer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockTransformer.transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sequence_classification.tests.mock.MockWriter">
+<em class="property">class </em><code class="descname">MockWriter</code><span class="sig-paren">(</span><em>base_dir='results'</em>, <em>file_prefix=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sequence_classification.tests.mock.MockWriter.write_results">
+<code class="descname">write_results</code><span class="sig-paren">(</span><em>dataset</em>, <em>classifier</em>, <em>params</em>, <em>conf_matrix_train</em>, <em>conf_matrix_test</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/mock.html#MockWriter.write_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.mock.MockWriter.write_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sequence_classification.tests.test_results_presenter">
+<span id="test-results-presenter"></span><h2>test_results_presenter<a class="headerlink" href="#module-sequence_classification.tests.test_results_presenter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sequence_classification.tests.test_results_presenter.results_presenter">
+<code class="descname">results_presenter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_results_presenter.html#results_presenter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_results_presenter.results_presenter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_results_presenter.test_should_prepare_measurements_for_test">
+<code class="descname">test_should_prepare_measurements_for_test</code><span class="sig-paren">(</span><em>results_presenter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_results_presenter.html#test_should_prepare_measurements_for_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_results_presenter.test_should_prepare_measurements_for_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_results_presenter.test_should_prepare_measurements_for_train">
+<code class="descname">test_should_prepare_measurements_for_train</code><span class="sig-paren">(</span><em>results_presenter</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_results_presenter.html#test_should_prepare_measurements_for_train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_results_presenter.test_should_prepare_measurements_for_train" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sequence_classification.tests.test_sequence_classifier_comparator">
+<span id="test-sequence-classifier-comparator"></span><h2>test_sequence_classifier_comparator<a class="headerlink" href="#module-sequence_classification.tests.test_sequence_classifier_comparator" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sequence_classification.tests.test_sequence_classifier_comparator.test_should_add_classifier">
+<code class="descname">test_should_add_classifier</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_sequence_classifier_comparator.html#test_should_add_classifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_sequence_classifier_comparator.test_should_add_classifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_sequence_classifier_comparator.test_should_change_name_and_params">
+<code class="descname">test_should_change_name_and_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_sequence_classifier_comparator.html#test_should_change_name_and_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_sequence_classifier_comparator.test_should_change_name_and_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_sequence_classifier_comparator.test_should_save_correctly_predicted_data">
+<code class="descname">test_should_save_correctly_predicted_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_sequence_classifier_comparator.html#test_should_save_correctly_predicted_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_sequence_classifier_comparator.test_should_save_correctly_predicted_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_sequence_classifier_comparator.test_should_save_wrong_predicted_data">
+<code class="descname">test_should_save_wrong_predicted_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_sequence_classifier_comparator.html#test_should_save_wrong_predicted_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_sequence_classifier_comparator.test_should_save_wrong_predicted_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-sequence_classification.tests.test_statistical_tests">
+<span id="test-statistical-tests"></span><h2>test_statistical_tests<a class="headerlink" href="#module-sequence_classification.tests.test_statistical_tests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sequence_classification.tests.test_statistical_tests.statistical_tests">
+<code class="descname">statistical_tests</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_statistical_tests.html#statistical_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_statistical_tests.statistical_tests" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_statistical_tests.test_correct_anova">
+<code class="descname">test_correct_anova</code><span class="sig-paren">(</span><em>statistical_tests</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_statistical_tests.html#test_correct_anova"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_statistical_tests.test_correct_anova" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_statistical_tests.test_correct_friedman">
+<code class="descname">test_correct_friedman</code><span class="sig-paren">(</span><em>statistical_tests</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_statistical_tests.html#test_correct_friedman"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_statistical_tests.test_correct_friedman" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_statistical_tests.test_correct_nemenyi">
+<code class="descname">test_correct_nemenyi</code><span class="sig-paren">(</span><em>statistical_tests</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_statistical_tests.html#test_correct_nemenyi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_statistical_tests.test_correct_nemenyi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_statistical_tests.test_correct_round">
+<code class="descname">test_correct_round</code><span class="sig-paren">(</span><em>statistical_tests</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_statistical_tests.html#test_correct_round"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_statistical_tests.test_correct_round" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sequence_classification.tests.test_statistical_tests.test_correct_t_student">
+<code class="descname">test_correct_t_student</code><span class="sig-paren">(</span><em>statistical_tests</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/tests/test_statistical_tests.html#test_correct_t_student"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.tests.test_statistical_tests.test_correct_t_student" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-sequence_classification.tests"></span></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sequence_classification.transformers.html" class="btn btn-neutral float-right" title="transformers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sequence_classification.classifiers.html" class="btn btn-neutral" title="classifiers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jakub Berezowski, Magda Lipowska, Piotr Miara, Grzegorz Szczepaniak
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
