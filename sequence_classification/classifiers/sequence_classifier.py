@@ -2,10 +2,9 @@ from sklearn.base import BaseEstimator
 
 
 class SequenceClassifier(BaseEstimator):
-    """
-    Generic class which other classifiers should extend.
+    """Generic class which other classifiers should extend.
 
-    Methods to implement: fit and predict
+    Methods to implement: fit and predict.
     A classifier should also have a name in order to distinguish it from other classifiers.
 
     SequenceClassifier inherits from BaseEstimator from scikit-learn.
@@ -13,10 +12,9 @@ class SequenceClassifier(BaseEstimator):
     that are needed in order to use GridSearchCV in SequenceClassifierComparator.
 
     Other guidelines for creating custom classifier:
-    - All arguments of __init__ should have default value
-        and the same name as they will have as the attributes of created object.
-    - No confirmation of input parameters or taking data as argument should be in __init__ method.
-        That belongs to fit method.
+        * All arguments of __init__ should have default value and the same name as they will have as the attributes of created object.
+        * No confirmation of input parameters or taking data as argument should be in __init__ method. That belongs to fit method.
+
     Source: http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/
     """
 
@@ -35,7 +33,7 @@ class SequenceClassifier(BaseEstimator):
         Fit method is responsible mainly for training model.
 
         It should also check the parameters.
-        New attributes can be also added here to the object - they should be ended by _ at the end, e.g. self.fitted_.
+        New attributes can be also added here to the object - they should be ended by _ at the end, e.g. `self.fitted_`.
         Fit method should return self (for compatibility reasons with common interface of scikit-learn).
         Source: http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/
 
