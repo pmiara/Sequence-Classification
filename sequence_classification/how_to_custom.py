@@ -1,5 +1,5 @@
-from transformers.sequence_transformer import SequenceTransformer
-from classifiers.sequence_classifier import SequenceClassifier
+from .transformers.sequence_transformer import SequenceTransformer
+from .classifiers.sequence_classifier import SequenceClassifier
 
 
 class CustomTransformer(SequenceTransformer):

@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>statistical_tests &mdash; Sequence Classification 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Sequence Classification
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../sequence_classification.html">sequence_classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">New README in rst file format</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sequence Classification</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>statistical_tests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for statistical_tests</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">Orange</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">friedmanchisquare</span><span class="p">,</span> <span class="n">f_oneway</span><span class="p">,</span> <span class="n">ttest_ind</span><span class="p">,</span> <span class="n">shapiro</span><span class="p">,</span> <span class="n">levene</span><span class="p">,</span> <span class="n">wilcoxon</span><span class="p">,</span> <span class="n">rankdata</span>
+<span class="kn">from</span> <span class="nn">scikit_posthocs</span> <span class="k">import</span> <span class="n">posthoc_nemenyi_friedman</span>
+
+
+<div class="viewcode-block" id="StatisticalTests"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests">[docs]</a><span class="k">class</span> <span class="nc">StatisticalTests</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">measurements</span><span class="p">,</span> <span class="n">dataset_names</span><span class="p">,</span> <span class="n">classifier_names</span><span class="p">,</span> <span class="n">round_precision</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span> <span class="o">=</span> <span class="n">measurements</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_names</span> <span class="o">=</span> <span class="n">dataset_names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier_names</span> <span class="o">=</span> <span class="n">classifier_names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span> <span class="o">=</span> <span class="n">round_precision</span>
+
+<div class="viewcode-block" id="StatisticalTests.compare_on_datasets_separately"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.compare_on_datasets_separately">[docs]</a>    <span class="k">def</span> <span class="nf">compare_on_datasets_separately</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_names</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tests for </span><span class="si">{}</span><span class="s1"> dataset&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compare_on_single_dataset</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.compare_on_single_dataset"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.compare_on_single_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">compare_on_single_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">):</span>
+        <span class="n">dataset_measurements</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_anova_assumptions</span><span class="p">(</span><span class="n">dataset_measurements</span><span class="p">):</span>
+            <span class="n">anova</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_anova_p_value</span><span class="p">(</span><span class="n">dataset_measurements</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">anova</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result of ANOVA test is negative: </span><span class="si">{}</span><span class="s1"> &lt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">anova</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifiers on this dataset don</span><span class="se">\&#39;</span><span class="s1">t have the same expected value.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Results of t-Student test&#39;</span><span class="p">)</span>
+                <span class="n">t_student_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_t_student</span><span class="p">(</span><span class="n">dataset_measurements</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">t_student_results</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">classifier_names</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">classifier_names</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result of ANOVA test is positive: </span><span class="si">{}</span><span class="s1"> &gt;= </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">anova</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifiers on this dataset have the same expected value.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The assumptions of the ANOVA test are not met&#39;</span><span class="p">)</span></div>
+            <span class="c1"># Kruskal-Wallis H-test could be run here (scipy.stats.kruskal)</span>
+
+<div class="viewcode-block" id="StatisticalTests.check_anova_assumptions"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.check_anova_assumptions">[docs]</a>    <span class="k">def</span> <span class="nf">check_anova_assumptions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_measurements</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_measurements</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">shapiro</span><span class="p">(</span><span class="n">dataset_measurements</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">levene</span><span class="p">(</span><span class="o">*</span><span class="n">dataset_measurements</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.compare_on_all_datasets"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.compare_on_all_datasets">[docs]</a>    <span class="k">def</span> <span class="nf">compare_on_all_datasets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tests for all datasets</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifier_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compare_with_wilcoxon</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compare_with_friedman_and_nemenyi</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.compare_with_wilcoxon"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.compare_with_wilcoxon">[docs]</a>    <span class="k">def</span> <span class="nf">compare_with_wilcoxon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">wilcoxon_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_wilcoxon_p_value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">wilcoxon_result</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result of Wilcoxon test is negative: </span><span class="si">{}</span><span class="s1"> &lt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wilcoxon_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifiers don</span><span class="se">\&#39;</span><span class="s1">t come from the same distribution&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result of Wilcoxon test is positive: </span><span class="si">{}</span><span class="s1"> &gt;= </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wilcoxon_result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifiers come from the same distribution&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.compare_with_friedman_and_nemenyi"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.compare_with_friedman_and_nemenyi">[docs]</a>    <span class="k">def</span> <span class="nf">compare_with_friedman_and_nemenyi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">friedman</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_friedman_p_value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">friedman</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result of Friedman test is negative: </span><span class="si">{}</span><span class="s1"> &lt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">friedman</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifiers are not the same</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Results of Nemenyi test&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifiers with their average ranks&#39;</span><span class="p">)</span>
+            <span class="n">avg_ranks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">rankdata</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_averages</span><span class="p">()],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">classifier_name</span><span class="p">,</span> <span class="n">avg_rank</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifier_names</span><span class="p">,</span> <span class="n">avg_ranks</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;- </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">classifier_name</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">avg_rank</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span><span class="p">)))</span>
+
+            <span class="n">cd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_critical_distance</span><span class="p">(</span><span class="n">avg_ranks</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Critical distance: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cd</span><span class="p">))</span>
+            <span class="n">Orange</span><span class="o">.</span><span class="n">evaluation</span><span class="o">.</span><span class="n">graph_ranks</span><span class="p">(</span><span class="n">avg_ranks</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier_names</span><span class="p">,</span> <span class="n">cd</span><span class="o">=</span><span class="n">cd</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">textspace</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Result of Friedman test is positive: </span><span class="si">{}</span><span class="s1"> &gt;= </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">friedman</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Classifiers are the same&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.calc_anova_p_value"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.calc_anova_p_value">[docs]</a>    <span class="k">def</span> <span class="nf">calc_anova_p_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_measurements</span><span class="p">):</span>
+        <span class="n">anova</span> <span class="o">=</span> <span class="n">f_oneway</span><span class="p">(</span><span class="o">*</span><span class="n">dataset_measurements</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">anova</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.calc_t_student"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.calc_t_student">[docs]</a>    <span class="k">def</span> <span class="nf">calc_t_student</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_measurements</span><span class="p">):</span>
+        <span class="n">t_student</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">classifier1</span> <span class="ow">in</span> <span class="n">dataset_measurements</span><span class="p">:</span>
+            <span class="n">classifier_result</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">classifier2</span> <span class="ow">in</span> <span class="n">dataset_measurements</span><span class="p">:</span>
+                <span class="n">classifier_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">classifier1</span><span class="p">,</span> <span class="n">classifier2</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">t_student</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">classifier_result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">t_student</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.calc_wilcoxon_p_value"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.calc_wilcoxon_p_value">[docs]</a>    <span class="k">def</span> <span class="nf">calc_wilcoxon_p_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">averages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_averages</span><span class="p">()</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">averages</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">wilcoxon</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.calc_friedman_p_value"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.calc_friedman_p_value">[docs]</a>    <span class="k">def</span> <span class="nf">calc_friedman_p_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">averages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_averages</span><span class="p">()</span>
+        <span class="n">friedman</span> <span class="o">=</span> <span class="n">friedmanchisquare</span><span class="p">(</span><span class="o">*</span><span class="n">averages</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">friedman</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.calc_nemenyi"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.calc_nemenyi">[docs]</a>    <span class="k">def</span> <span class="nf">calc_nemenyi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">averages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_averages</span><span class="p">()</span>
+        <span class="n">nemenyi</span> <span class="o">=</span> <span class="n">posthoc_nemenyi_friedman</span><span class="p">(</span><span class="n">averages</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">nemenyi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.calc_averages"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.calc_averages">[docs]</a>    <span class="k">def</span> <span class="nf">calc_averages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="StatisticalTests.calc_critical_distance"><a class="viewcode-back" href="../sequence_classification.html#statistical_tests.StatisticalTests.calc_critical_distance">[docs]</a>    <span class="k">def</span> <span class="nf">calc_critical_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">avg_ranks</span><span class="p">):</span>
+        <span class="n">cd</span> <span class="o">=</span> <span class="n">Orange</span><span class="o">.</span><span class="n">evaluation</span><span class="o">.</span><span class="n">compute_CD</span><span class="p">(</span><span class="n">avg_ranks</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_names</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">cd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_precision</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Jakub Berezowski, Magda Lipowska, Piotr Miara, Grzegorz Szczepaniak
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
