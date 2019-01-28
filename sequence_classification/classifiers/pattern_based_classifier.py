@@ -40,7 +40,8 @@ class PatternBasedClassifier(SequenceClassifier):
         ps.min_len = self.min_len
         ps.max_len = self.max_len
         frequent_patterns = ps.topk(self.k,
-            filter=lambda patt, matches: len(matches) > self.min_support)
+            filter=lambda patt, matches: len(matches) > self.min_support,
+            closed=True)
         return pd.DataFrame(frequent_patterns, columns=['support', 'pattern'])
 
     @staticmethod
