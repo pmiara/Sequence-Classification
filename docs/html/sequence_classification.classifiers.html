@@ -293,6 +293,11 @@ y: vector of classes to train on, same length as X</p>
 <em class="property">class </em><code class="descname">PatternBasedClassifier</code><span class="sig-paren">(</span><em>name='PatternBased'</em>, <em>transformer=None</em>, <em>min_support=1</em>, <em>min_len=1</em>, <em>max_len=1000</em>, <em>k=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.pattern_based_classifier.PatternBasedClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sequence_classification.classifiers.sequence_classifier.SequenceClassifier" title="sequence_classification.classifiers.sequence_classifier.SequenceClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence_classification.classifiers.sequence_classifier.SequenceClassifier</span></code></a></p>
 <dl class="staticmethod">
+<dt id="sequence_classification.classifiers.pattern_based_classifier.PatternBasedClassifier._clean_index">
+<em class="property">static </em><code class="descname">_clean_index</code><span class="sig-paren">(</span><em>rules</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier._clean_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.pattern_based_classifier.PatternBasedClassifier._clean_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
 <dt id="sequence_classification.classifiers.pattern_based_classifier.PatternBasedClassifier._contains_pattern">
 <em class="property">static </em><code class="descname">_contains_pattern</code><span class="sig-paren">(</span><em>sequence</em>, <em>pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier._contains_pattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.pattern_based_classifier.PatternBasedClassifier._contains_pattern" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -310,14 +315,9 @@ y: vector of classes to train on, same length as X</p>
 <dl class="method">
 <dt id="sequence_classification.classifiers.pattern_based_classifier.PatternBasedClassifier._fit">
 <code class="descname">_fit</code><span class="sig-paren">(</span><em>X_train</em>, <em>y_train</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier._fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.pattern_based_classifier.PatternBasedClassifier._fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit method is responsible mainly for training model.</p>
-<p>It should also check the parameters.
-New attributes can be also added here to the object - they should be ended by _ at the end, e.g. <cite>self.fitted_</cite>.
-Fit method should return self (for compatibility reasons with common interface of scikit-learn).
-Source: <a class="reference external" href="http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/">http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/</a></p>
-<p>X : features to train on
-y: vector of classes to train on, same length as X</p>
-<p>self: the classifier itself</p>
+<dd><p>Trains PatternBasedClassifier on given train data.
+Result of this method is a pandas DataFrame with columns: y, support, pattern, confidence, length.
+It is stored in self.rules</p>
 </dd></dl>
 
 <dl class="method">
@@ -552,6 +552,11 @@ y: vector of classes to train on, same length as X</p>
 <em class="property">class </em><code class="descname">PatternBasedClassifier</code><span class="sig-paren">(</span><em>name='PatternBased'</em>, <em>transformer=None</em>, <em>min_support=1</em>, <em>min_len=1</em>, <em>max_len=1000</em>, <em>k=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.PatternBasedClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sequence_classification.classifiers.sequence_classifier.SequenceClassifier" title="sequence_classification.classifiers.sequence_classifier.SequenceClassifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">sequence_classification.classifiers.sequence_classifier.SequenceClassifier</span></code></a></p>
 <dl class="staticmethod">
+<dt id="sequence_classification.classifiers.PatternBasedClassifier._clean_index">
+<em class="property">static </em><code class="descname">_clean_index</code><span class="sig-paren">(</span><em>rules</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier._clean_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.PatternBasedClassifier._clean_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
 <dt id="sequence_classification.classifiers.PatternBasedClassifier._contains_pattern">
 <em class="property">static </em><code class="descname">_contains_pattern</code><span class="sig-paren">(</span><em>sequence</em>, <em>pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier._contains_pattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.PatternBasedClassifier._contains_pattern" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -569,14 +574,9 @@ y: vector of classes to train on, same length as X</p>
 <dl class="method">
 <dt id="sequence_classification.classifiers.PatternBasedClassifier._fit">
 <code class="descname">_fit</code><span class="sig-paren">(</span><em>X_train</em>, <em>y_train</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/pattern_based_classifier.html#PatternBasedClassifier._fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.PatternBasedClassifier._fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit method is responsible mainly for training model.</p>
-<p>It should also check the parameters.
-New attributes can be also added here to the object - they should be ended by _ at the end, e.g. <cite>self.fitted_</cite>.
-Fit method should return self (for compatibility reasons with common interface of scikit-learn).
-Source: <a class="reference external" href="http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/">http://danielhnyk.cz/creating-your-own-estimator-scikit-learn/</a></p>
-<p>X : features to train on
-y: vector of classes to train on, same length as X</p>
-<p>self: the classifier itself</p>
+<dd><p>Trains PatternBasedClassifier on given train data.
+Result of this method is a pandas DataFrame with columns: y, support, pattern, confidence, length.
+It is stored in self.rules</p>
 </dd></dl>
 
 <dl class="method">
