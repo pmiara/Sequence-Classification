@@ -4,12 +4,12 @@
 ## Installing
 ### Docker
 ```
-requirements.txt - zależności do Pythona
+Plik requirements.txt zawiera niezbędne zależności potrzebne do poprawnego działania systemu.
+Po instalacji Docker (https://www.docker.com) oraz docker-compose (https://docs.docker.com/compose) należu przejść do katalogu
+głównego aplikacji. Następnie należy użyć polecenia docker-compose up. 
 
-docker-compose up - uruchamianie aplikacji, w razie błędów dodaj sudo
-
-docker image rm -f sequences - po zmianach w requirements.txt usuwanie istniejącego obrazu dockerowego,
-potem docker compose up żeby zbudować nowy, ustawić properties i uruchomić
+Po dodaniu innych bibliotek do pliku requirenments.txt należy przebudować obraz systemu. Można to osiągnąć usuwając go
+docker image rm -f sequences, a następnie docker-compose up żeby zbudować nowy obraz, ustawić properties i uruchomić system.
 ```
 ### Google Colab
 1. Go to: https://colab.research.google.com/github/piotermiarer/Sequence-Classification/blob/master/sequence-classification/jupiter_shared/usage_example.ipynb
