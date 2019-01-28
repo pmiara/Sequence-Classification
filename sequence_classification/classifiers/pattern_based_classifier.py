@@ -31,7 +31,7 @@ class PatternBasedClassifier(SequenceClassifier):
                 first_rule = self.rules[rules_satisfying_condition].iloc[0]
                 predicted_class = first_rule['y']
             except IndexError:
-                predicted_class = None
+                predicted_class = self.rules['y'].iloc[0]
             result.append(predicted_class)
         return result
 
