@@ -14,7 +14,7 @@ class PatternBasedClassifier(SequenceClassifier):
         self.rules = None
 
     def _fit(self, X_train, y_train):
-        df = pd.DataFrame(X_train, columns=['X'])
+        df = pd.DataFrame({'X': X_train, 'y': y_train})
         df['y'] = y_train
         rules = df.groupby('y').apply(lambda rows: self._find_frequent_patterns(rows['X'].tolist()))
         rules['support_all'] = rules['pattern'].apply(lambda patt: self._count_support(df['X'], patt))
