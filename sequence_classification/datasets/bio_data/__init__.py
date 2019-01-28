@@ -10,6 +10,7 @@ class BioDataset(DatasetLoader):
             lines = f.readlines()
             for line in lines:
                 bio_class, _, sequence = line.replace(' ', '').replace('\n', '').split(',')
+                bio_class = int(bio_class)
                 bio_data.append((' '.join(list(sequence)), bio_class))
         X, y = get_X_y(bio_data)
         return Dataset(X, y, name)
