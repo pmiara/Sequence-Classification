@@ -66,17 +66,17 @@ class StatisticalTests:
             print('Classifiers come from the same distribution')
 
     def compare_with_friedman_and_nemenyi(self):
+        print('Classifiers with their average ranks')
+        avg_ranks = np.mean([rankdata(-a) for a in self.calc_averages()], axis=0)
+        for classifier_name, avg_rank in zip(self.classifier_names, avg_ranks):
+            print('- {}: {}'.format(classifier_name, round(avg_rank, self.round_precision)))
+
         friedman = self.calc_friedman_p_value()
         if friedman < self.alpha:
             print('Result of Friedman test is negative: {} < {}'.format(friedman, self.alpha))
             print('Classifiers are not the same\n')
 
             print('Results of Nemenyi test')
-            print('Classifiers with their average ranks')
-            avg_ranks = np.mean([rankdata(-a) for a in self.calc_averages()], axis=0)
-            for classifier_name, avg_rank in zip(self.classifier_names, avg_ranks):
-                print('- {}: {}'.format(classifier_name, round(avg_rank, self.round_precision)))
-
             cd = self.calc_critical_distance(avg_ranks)
             print('Critical distance: {}'.format(cd))
             Orange.evaluation.graph_ranks(avg_ranks, self.classifier_names, cd=cd, width=6, textspace=1.5)
