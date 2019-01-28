@@ -14,14 +14,26 @@ class PatternBasedClassifier(SequenceClassifier):
         self.rules = None
 
     def _fit(self, X_train, y_train):
+        """
+        Trains PatternBasedClassifier on given train data.
+        Result of this method is a pandas DataFrame with columns: y, support, pattern, confidence, length.
+        It is stored in self.rules
+        """
         df = pd.DataFrame({'X': X_train, 'y': y_train})
         df['y'] = y_train
-        rules = df.groupby('y').apply(lambda rows: self._find_frequent_patterns(rows['X'].tolist()))
-        rules['support_all'] = rules['pattern'].apply(lambda patt: self._count_support(df['X'], patt))
+        rules = df.groupby('y').apply(
+            lambda rows: self._find_frequent_patterns(rows['X'].tolist())
+        )
+        # add temporary column support_all needed for calculation of rules' confidence
+        rules['support_all'] = rules['pattern'].apply(
+            lambda patt: self._count_support(df['X'], patt)
+        )
         rules['confidence'] = rules['support'] / rules['support_all']
+        rules = rules.drop(columns=['support_all'])
         rules['length'] = rules['pattern'].apply(len)
         rules = rules.sort_values(['confidence', 'support', 'length'], ascending=False)
-        self.rules = rules.reset_index(level=1, drop=True).reset_index()
+        # cleaning is needed since pandas makes a mess after grouping and sorting
+        self.rules = self._clean_index(rules)
 
     def _predict(self, X):
         result = []
@@ -43,6 +55,10 @@ class PatternBasedClassifier(SequenceClassifier):
             filter=lambda patt, matches: len(matches) > self.min_support,
             closed=True)
         return pd.DataFrame(frequent_patterns, columns=['support', 'pattern'])
+
+    @staticmethod
+    def _clean_index(rules):
+        return rules.reset_index(level=1, drop=True).reset_index()
 
     @staticmethod
     def _contains_pattern(sequence, pattern):
