@@ -32,4 +32,4 @@ def get_X_y(data):
     vectorizer.fit(docs)
     integers_from_strings = [[vectorizer.vocabulary_.get(y.lower()) for y in re.sub(r'[.!,;?]', ' ', x).split() if
                               vectorizer.vocabulary_.get(y.lower()) is not None] for x in docs]
-    return np.array(integers_from_strings), np.array([x[1] for x in data])
+    return integers_from_strings, [x[1] for x in data]
