@@ -83,7 +83,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../sequence_classification.html">sequence_classification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">New README in rst file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">README</a></li>
 </ul>
 
             
@@ -152,13 +152,10 @@
 
 <div class="viewcode-block" id="SequenceClassifier"><a class="viewcode-back" href="../../../sequence_classification.classifiers.html#sequence_classification.classifiers.sequence_classifier.SequenceClassifier">[docs]</a><span class="k">class</span> <span class="nc">SequenceClassifier</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generic class which other classifiers should extend.</span>
+<span class="sd">    It inherits from BaseEstimator from scikit-learn.</span>
 
-<span class="sd">    Methods to implement: fit and predict.</span>
+<span class="sd">    Methods to implement: _fit and _predict.</span>
 <span class="sd">    A classifier should also have a name in order to distinguish it from other classifiers.</span>
-
-<span class="sd">    SequenceClassifier inherits from BaseEstimator from scikit-learn.</span>
-<span class="sd">    Thanks to it we have implemented get_params and set_params methods</span>
-<span class="sd">    that are needed in order to use GridSearchCV in SequenceClassifierComparator.</span>
 
 <span class="sd">    Other guidelines for creating custom classifier:</span>
 <span class="sd">        * All arguments of __init__ should have default value and the same name as they will have as the attributes of created object.</span>

@@ -3,13 +3,10 @@ from sklearn.base import BaseEstimator
 
 class SequenceClassifier(BaseEstimator):
     """Generic class which other classifiers should extend.
+    It inherits from BaseEstimator from scikit-learn.
 
-    Methods to implement: fit and predict.
+    Methods to implement: _fit and _predict.
     A classifier should also have a name in order to distinguish it from other classifiers.
-
-    SequenceClassifier inherits from BaseEstimator from scikit-learn.
-    Thanks to it we have implemented get_params and set_params methods
-    that are needed in order to use GridSearchCV in SequenceClassifierComparator.
 
     Other guidelines for creating custom classifier:
         * All arguments of __init__ should have default value and the same name as they will have as the attributes of created object.

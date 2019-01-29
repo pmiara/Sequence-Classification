@@ -107,7 +107,7 @@
 <li class="toctree-l2"><a class="reference internal" href="sequence_classification.html#module-sequence_classification.statistical_tests">statistical_tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="readme.html">New README in rst file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">README</a></li>
 </ul>
 
             
@@ -338,12 +338,10 @@ It is stored in self.rules</p>
 <dt id="sequence_classification.classifiers.sequence_classifier.SequenceClassifier">
 <em class="property">class </em><code class="descname">SequenceClassifier</code><span class="sig-paren">(</span><em>name</em>, <em>transformer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sequence_classification/classifiers/sequence_classifier.html#SequenceClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sequence_classification.classifiers.sequence_classifier.SequenceClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
-<p>Generic class which other classifiers should extend.</p>
-<p>Methods to implement: fit and predict.
+<p>Generic class which other classifiers should extend.
+It inherits from BaseEstimator from scikit-learn.</p>
+<p>Methods to implement: _fit and _predict.
 A classifier should also have a name in order to distinguish it from other classifiers.</p>
-<p>SequenceClassifier inherits from BaseEstimator from scikit-learn.
-Thanks to it we have implemented get_params and set_params methods
-that are needed in order to use GridSearchCV in SequenceClassifierComparator.</p>
 <dl class="docutils">
 <dt>Other guidelines for creating custom classifier:</dt>
 <dd><ul class="first last simple">
