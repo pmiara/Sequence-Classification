@@ -18,10 +18,10 @@ test\_results\_presenter
     :undoc-members:
     :show-inheritance:
 
-test\_sequence\_classifier\_comparator
+test\_sequence\_classifier\_manager
 --------------------------------------
 
-.. automodule:: sequence_classification.tests.test_sequence_classifier_comparator
+.. automodule:: sequence_classification.tests.test_sequence_classifier_manager
     :members:
     :undoc-members:
     :show-inheritance:

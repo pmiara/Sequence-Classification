@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sequence_classification.sequence_classifier_comparator &mdash; Sequence Classification 1.0 documentation</title>
+  <title>sequence_classification.sequence_classifier_manager &mdash; Sequence Classification 1.0 documentation</title>
   
 
   
@@ -131,7 +131,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>sequence_classification.sequence_classifier_comparator</li>
+      <li>sequence_classification.sequence_classifier_manager</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -146,7 +146,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for sequence_classification.sequence_classifier_comparator</h1><div class="highlight"><pre>
+  <h1>Source code for sequence_classification.sequence_classifier_manager</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span><span class="p">,</span> <span class="n">train_test_split</span>
 
@@ -154,7 +154,7 @@
 <span class="kn">from</span> <span class="nn">.datasets.utils</span> <span class="k">import</span> <span class="n">Dataset</span>
 
 
-<div class="viewcode-block" id="SequenceClassifierComparator"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_comparator.SequenceClassifierComparator">[docs]</a><span class="k">class</span> <span class="nc">SequenceClassifierComparator</span><span class="p">:</span>
+<div class="viewcode-block" id="SequenceClassifierManager"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_manager.SequenceClassifierManager">[docs]</a><span class="k">class</span> <span class="nc">SequenceClassifierManager</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">classifiers_with_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">classifiers_with_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">classifiers_with_params</span> <span class="o">=</span> <span class="p">[]</span>
@@ -164,22 +164,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cv</span> <span class="o">=</span> <span class="n">cv</span>
 
-<div class="viewcode-block" id="SequenceClassifierComparator.add_classifier"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_comparator.SequenceClassifierComparator.add_classifier">[docs]</a>    <span class="k">def</span> <span class="nf">add_classifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SequenceClassifierManager.add_classifier"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_manager.SequenceClassifierManager.add_classifier">[docs]</a>    <span class="k">def</span> <span class="nf">add_classifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classifiers_with_params</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">classifier</span><span class="p">,</span> <span class="n">params</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="SequenceClassifierComparator.add_dataset"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_comparator.SequenceClassifierComparator.add_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">add_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SequenceClassifierManager.add_dataset"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_manager.SequenceClassifierManager.add_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">add_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
             <span class="n">dataset</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">dataset</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SequenceClassifierComparator.add_custom_dataset"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_comparator.SequenceClassifierComparator.add_custom_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">add_custom_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="SequenceClassifierManager.add_custom_dataset"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_manager.SequenceClassifierManager.add_custom_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">add_custom_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="SequenceClassifierComparator.fit_predict_all"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_comparator.SequenceClassifierComparator.fit_predict_all">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rounds</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<div class="viewcode-block" id="SequenceClassifierManager.fit_predict_all"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_manager.SequenceClassifierManager.fit_predict_all">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">split_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rounds</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">split_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">split_params</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">:</span>
@@ -192,7 +192,7 @@
                     <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">classifier</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">results</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SequenceClassifierComparator.fit_predict"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_comparator.SequenceClassifierComparator.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<div class="viewcode-block" id="SequenceClassifierManager.fit_predict"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_manager.SequenceClassifierManager.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
         <span class="n">grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
         <span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
@@ -206,7 +206,7 @@
         <span class="n">conf_matrix_test</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">conf_matrix_train</span><span class="p">,</span> <span class="n">conf_matrix_test</span></div>
 
-<div class="viewcode-block" id="SequenceClassifierComparator.get_presenter"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_comparator.SequenceClassifierComparator.get_presenter">[docs]</a>    <span class="k">def</span> <span class="nf">get_presenter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SequenceClassifierManager.get_presenter"><a class="viewcode-back" href="../../sequence_classification.html#sequence_classification.sequence_classifier_manager.SequenceClassifierManager.get_presenter">[docs]</a>    <span class="k">def</span> <span class="nf">get_presenter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">dataset_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">]</span>
         <span class="n">classifier_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifiers_with_params</span><span class="p">]</span>
         <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read_results</span><span class="p">(</span><span class="n">dataset_names</span><span class="p">,</span> <span class="n">classifier_names</span><span class="p">)</span>

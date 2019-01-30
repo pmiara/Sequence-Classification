@@ -43,10 +43,10 @@ results\_writer
     :undoc-members:
     :show-inheritance:
 
-sequence\_classifier\_comparator
+sequence\_classifier\_manager
 --------------------------------
 
-.. automodule:: sequence_classification.sequence_classifier_comparator
+.. automodule:: sequence_classification.sequence_classifier_manager
     :members:
     :undoc-members:
     :show-inheritance:
