@@ -1,4 +1,4 @@
-from sequence_classification.sequence_classifier_comparator import SequenceClassifierComparator
+from sequence_classification.sequence_classifier_manager import SequenceClassifierManager
 import numpy as np
 
 from .mock import (MockClassifier, MockReader, MockWriter, PARAMS, DATASET,
@@ -7,7 +7,7 @@ from .mock import (MockClassifier, MockReader, MockWriter, PARAMS, DATASET,
 
 def test_should_add_classifier():
     # given
-    seq_class_comparator = SequenceClassifierComparator(MockWriter(), MockReader())
+    seq_class_comparator = SequenceClassifierManager(MockWriter(), MockReader())
     test_class = MockClassifier()
 
     # when
@@ -20,7 +20,7 @@ def test_should_add_classifier():
 def test_should_save_correctly_predicted_data():
     # given
     test_writer = MockWriter()
-    seq_class_comparator = SequenceClassifierComparator(test_writer, MockReader())
+    seq_class_comparator = SequenceClassifierManager(test_writer, MockReader())
     test_class = MockClassifier()
     seq_class_comparator.add_classifier(test_class)
     X = [1,2,3,4,5]
@@ -41,7 +41,7 @@ def test_should_save_correctly_predicted_data():
 def test_should_save_wrong_predicted_data():
     #given
     test_writer = MockWriter()
-    seq_class_comparator = SequenceClassifierComparator(test_writer, MockReader())
+    seq_class_comparator = SequenceClassifierManager(test_writer, MockReader())
     test_class = MockClassifier()
     seq_class_comparator.add_classifier(test_class)
     X = [1,2,3,4,5]
@@ -60,7 +60,7 @@ def test_should_change_name_and_params():
     # given
     test_writer = MockWriter()
     params = {"x":["a"]}
-    seq_class_comparator = SequenceClassifierComparator(test_writer, MockReader())
+    seq_class_comparator = SequenceClassifierManager(test_writer, MockReader())
     test_class = MockClassifier("NAME")
     seq_class_comparator.add_classifier(test_class, params=params)
     X = [1,2,3,4,5]
