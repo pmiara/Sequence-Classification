@@ -5,7 +5,7 @@ from .results_presenter import ResultsPresenter
 from .datasets.utils import Dataset
 
 
-class SequenceClassifierComparator:
+class SequenceClassifierManager:
     def __init__(self, writer, reader, classifiers_with_params=None, cv=3):
         if classifiers_with_params is None:
             classifiers_with_params = []
